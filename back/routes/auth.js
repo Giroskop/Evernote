@@ -6,7 +6,6 @@ const saltRounds = 10
 
 /* GET home page. */
 router.route('/:authPage').post(async (req, res) => {
-	console.log('Зашло в пост')
 	if (req.params.authPage === 'signUp') {
 		const { firstName, lastName, email, password } = req.body
 		if (email && password) {

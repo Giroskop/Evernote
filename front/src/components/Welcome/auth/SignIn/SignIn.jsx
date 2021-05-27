@@ -61,8 +61,7 @@ export default function SignIn() {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newUser)
     })
-    .then(res => res.json())
-    .then(jsonServer => console.log(jsonServer))
+    .then(res => console.log(res.status))
   }
 
   return (

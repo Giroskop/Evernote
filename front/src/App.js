@@ -1,9 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
-import Auth from './components/auth/Auth';
+import Welcome from './components/Welcome/Welcome';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import SignIn from './components/auth/SignIn/SignIn';
-import SignUp from './components/auth/SignUp/SignUp';
+import SignIn from './components/Welcome/auth/SignIn/SignIn';
+import SignUp from './components/Welcome/auth/SignUp/SignUp';
 import NavbarMain from './components/NavbarMain/NavbarMain';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <NavbarMain/>
         <Switch>
           <Route exact path="/">
-            <Auth/>
+            <Welcome/>
           </Route>
           <Route path="/signIn">
             <SignIn/>

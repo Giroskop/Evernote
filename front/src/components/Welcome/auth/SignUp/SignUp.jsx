@@ -61,8 +61,13 @@ export default function SignUp() {
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newUser)
     })
-    .then(res => res.json())
-    .then(jsonServer => console.log(jsonServer))
+    .then(res => {
+      if (res.status === 201) {
+        console.log('test')
+        window.location = '/signIn'
+        console.log('late test')
+      }
+    })
   }
 
   return (
