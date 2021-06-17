@@ -11,6 +11,7 @@ router.route('/:authPage').post(async (req, res) => {
 		if (email && password) {
 			if (await User.findOne({ email: email })) {
 				// Ошибка: такой юзер уже зарегистрирован - запрет регистрации
+        return res.sendStatus(406)
 			} else {
 				// Что лучше? Сделать unique поле в базе данных - тогда при регистрации мы будем попадать в catch (но что если будут другие ошибки) или проверять здесь, предварительно делая поиск в бд?
 				try {
@@ -23,13 +24,15 @@ router.route('/:authPage').post(async (req, res) => {
 						email: email,
 						password: passwordHash,
 					})
-					return res.sendStatus(201)
+          return res.status(200).json(newUser)
 				} catch (err) {
 					// Ошибка: при записи в базу данных
+          res.json(err)
 				}
 			}
 		} else {
 			// Ошибка: не все поля заполнены
+      return res.sendStatus(400)
 		}
 	} else if (req.params.authPage === 'signIn') {
 		try {

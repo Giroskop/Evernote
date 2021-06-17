@@ -1,0 +1,2 @@
+export const NOTEPAD_CREATE = 'NOTEPAD_CREATE'
+export const NOTEPAD_DELETE = 'NOTEPAD_DELETE'

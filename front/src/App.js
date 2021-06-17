@@ -2,9 +2,12 @@ import logo from './logo.svg';
 import './App.css';
 import Welcome from './components/Welcome/Welcome';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import SignIn from './components/Welcome/auth/SignIn/SignIn';
-import SignUp from './components/Welcome/auth/SignUp/SignUp';
+import SignIn from './components/Welcome/auth/SignIn';
+import SignUp from './components/Welcome/auth/SignUp';
 import NavbarMain from './components/NavbarMain/NavbarMain';
+import ErrorPage from './components/ErrorPage';
+
+
 
 function App() {
   return (
@@ -15,11 +18,14 @@ function App() {
           <Route exact path="/">
             <Welcome/>
           </Route>
-          <Route path="/signIn">
+          <Route exact path="/signIn">
             <SignIn/>
           </Route>
-          <Route path="/signUp">
+          <Route exact path="/signUp">
             <SignUp/>
+          </Route>
+          <Route exact path="/errorPage">
+            <ErrorPage/>
           </Route>
         </Switch>
       </Router>

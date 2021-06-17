@@ -50,13 +50,12 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn() {
   const classes = useStyles();
 
-  const [user, setUser] = useState({})
 
   const signInUser = (e) => {
     e.preventDefault()
     const newUser = Object.fromEntries(new FormData(e.target))
 
-    fetch('http://127.0.0.1:3000/auth/signIn', {
+    fetch('http://127.0.0.1:3001/auth/signIn', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(newUser)
