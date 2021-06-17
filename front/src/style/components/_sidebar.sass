@@ -1,0 +1,61 @@
+.sidebar
+  position: fixed
+  top: 64px
+  left: 0
+  width: 200px
+  height: 100%
+  background-color: $grey-dark
+  box-shadow: 1px 0 0 #000
+  color: $white
+  &-container
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    overflow: auto
+
+  &-items
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    overflow: hidden
+    max-height: 32px
+    transition: 0.5s ease
+  &__subtitle
+    display: flex
+    align-items: center
+    justify-content: center
+    width: 100%
+    cursor: pointer
+    background-color: inherit
+    &-name
+      margin: 0
+      width: 100%
+      &:hover
+        color: $orange
+      &--focus
+        color: $orange
+  &__list
+    padding: 0
+    margin: 0
+    display: flex
+    flex-direction: column
+    width: 100%
+  &__item
+    width: 100%
+    text-align: start
+    padding: 5px 10px
+    padding-left: 20px
+    &:hover
+      background-color: #d3d3d3
+    &-link
+      display: inline-block
+      width: 100%
+      color: $light
+      &:hover
+        color: black
+        color: $black
+    &-name
+  &__dropdown-collapse
+    max-height: 1000px
