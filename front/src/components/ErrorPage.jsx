@@ -2,6 +2,6 @@
 export default function ErrorPage() {
 
   return (
-    <div>ERROR</div>
+    <div>Я НЕ УСПЕЛ НАПИСАТЬ ЭТУ СТРАНИЦУ</div>
   )
 }

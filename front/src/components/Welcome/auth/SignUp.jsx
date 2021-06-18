@@ -54,7 +54,11 @@ export default function SignUp() {
 	const history = useHistory()
   const dispatch = useDispatch()
 	const [values, changeHandler] = useForm()
-  const [error, setError] = useState()
+  const [error, setError] = useState({
+    status: false,
+    message: ''
+  })
+  console.log(history, '<<<<<<<<<<<<<<<<<<<<<<<<<')
   const user = useSelector(state => state.user)
   console.log(user)
 
@@ -79,11 +83,11 @@ export default function SignUp() {
         break
       case 400:
         console.log('не все поля заполнены')
-        setError('Не все поля заполнены')
+        setError(prev => ({...prev, message: 'Не все поля заполнены'}))
         break
       case 406:
         console.log('юзер уже существует')
-        setError('Юзер уже существует')
+        setError(prev => ({...prev, message: 'Юзер уже существует'}))
         break
       default:
         console.log('error from auth', res)
@@ -101,7 +105,7 @@ export default function SignUp() {
 				</Avatar>
 				<Typography component='h1' variant='h5'>
 					Sign up
-          <p style={{color:"red"}}>{error}</p>
+          <p style={{color:"red"}}>{error.message}</p>
 				</Typography>
 				<form className={classes.form} noValidate onSubmit={e => signUpUser(e)}>
 					<Grid container spacing={2}>

@@ -3,9 +3,10 @@ const initState = {
   user: {},
   notepads: [],
   placemarks: [],
-  tags: []
-
+  tags: [],
+  path: ''
 }
+export default initState
 // placemark = {
 //   title: String,
 //   description: String,
