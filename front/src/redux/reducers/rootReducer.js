@@ -3,12 +3,12 @@ import pathReducer from "./pathReducer";
 import notepadReducer from './notepadReducer'
 import placemarkReducer from './placemarkReducer'
 import tagReducer from './tagReducer'
+import userReducer from "./userReducer";
 
 
 const rootReducer = combineReducers({
-  notepads: notepadReducer,
-  placemarks: placemarkReducer,
-  tags: tagReducer,
+  user: userReducer,
   path: pathReducer,
+  notepads: notepadReducer,
 })
 export default rootReducer

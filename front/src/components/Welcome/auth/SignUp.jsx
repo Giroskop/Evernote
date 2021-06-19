@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container'
 import useForm from '../../../hooks/useForm'
 import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
+import {setUser} from '../../../redux/actions/userAC'
 function Copyright() {
 	return (
 		<Typography variant='body2' color='textSecondary' align='center'>
@@ -58,9 +59,6 @@ export default function SignUp() {
     status: false,
     message: ''
   })
-  console.log(history, '<<<<<<<<<<<<<<<<<<<<<<<<<')
-  const user = useSelector(state => state.user)
-  console.log(user)
 
 	const signUpUser = async (e) => {
 		e.preventDefault()
@@ -77,8 +75,8 @@ export default function SignUp() {
         console.log('you pushed to /')
         const user = await res.json()
         console.log(user)
-        window.localStorage.setItem('user', user._id)
-        dispatch()
+        window.localStorage.setItem('email', user.email)
+        dispatch(setUser(user))
         history.push('/')
         break
       case 400:
@@ -118,7 +116,7 @@ export default function SignUp() {
 								id='firstName'
 								label='First Name'
 								autoFocus
-								value={values.firstName}
+								value={values.firstName || ''}
 								onChange={changeHandler}
 							/>
 						</Grid>
@@ -130,7 +128,7 @@ export default function SignUp() {
 								label='Last Name'
 								name='lastName'
 								autoComplete='lname'
-								value={values.lastName}
+								value={values.lastName || ''}
 								onChange={changeHandler}
 							/>
 						</Grid>
@@ -143,7 +141,7 @@ export default function SignUp() {
 								label='Email Address'
 								name='email'
 								autoComplete='email'
-								value={values.email}
+								value={values.email || ''}
 								onChange={changeHandler}
 							/>
 						</Grid>
@@ -157,7 +155,7 @@ export default function SignUp() {
 								type='password'
 								id='password'
 								autoComplete='current-password'
-								value={values.password}
+								value={values.password || ''}
 								onChange={changeHandler}
 							/>
 						</Grid>

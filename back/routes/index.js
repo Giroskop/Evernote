@@ -5,7 +5,11 @@ const User = require('../db/models/user')
 /* GET home page. */
 router.route('/')
 .get( async (req, res) => {
-  res.render('index', { title: 'Express' });
+  const user = await User.find({email})
+})
+.post(async(req, res) => {
+  const user = await User.find({email})
+  res.json(user)
 })
 
 module.exports = router;

@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import rootReducer from './redux/reducers/rootReducer'
 import initState from './redux/initState'
 
+
 const store = createStore(rootReducer, initState, composeWithDevTools())
 
 ReactDOM.render(

@@ -13,6 +13,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import useForm from '../../../hooks/useForm';
+import { useDispatch } from 'react-redux';
+import {setUser} from '../../../redux/actions/userAC'
 
 function Copyright() {
   return (
@@ -49,18 +52,23 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-
+  const [values, changeHandler] = useForm()
+  const dispatch = useDispatch()
 
   const signInUser = (e) => {
     e.preventDefault()
-    const newUser = Object.fromEntries(new FormData(e.target))
 
     fetch('http://127.0.0.1:3001/auth/signIn', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
-      body: JSON.stringify(newUser)
+      body: JSON.stringify(values)
     })
-    .then(res => console.log(res.status))
+    .then(res => res.json())
+    .then( res => {
+      window.localStorage.setItem('email', res.email)
+      console.log(res)
+      dispatch(setUser(res))
+    })
   }
 
   return (
@@ -84,6 +92,8 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            value={values.email || ''}
+            onChange={changeHandler}
           />
           <TextField
             variant="outlined"
@@ -95,6 +105,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={values.password || ''}
+            onChange={changeHandler}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

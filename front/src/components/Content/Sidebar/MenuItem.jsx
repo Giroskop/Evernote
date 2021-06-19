@@ -4,7 +4,7 @@ export default function MenuItem({title}) {
 	return (
 		<>
 			<li className='sidebar__item'>
-        <Link className='sidebar__item-link'>{title}</Link>
+        <Link to="/" className='sidebar__item-link'>{title}</Link>
 			</li>
 		</>
 	)

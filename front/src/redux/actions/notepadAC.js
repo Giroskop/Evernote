@@ -3,7 +3,7 @@ import { NOTEPAD_CREATE, NOTEPAD_DELETE } from '../types/notepad'
 const notepadCreate = (notepad) => {
   return {
     type: NOTEPAD_CREATE,
-    paylaod: notepad,
+    payload: notepad,
   }
 }
 
