@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import useForm from '../../../hooks/useForm';
 import { useDispatch } from 'react-redux';
 import {setUser} from '../../../redux/actions/userAC'
+import {useHistory} from 'react-router'
 
 function Copyright() {
   return (
@@ -54,6 +55,7 @@ export default function SignIn() {
   const classes = useStyles();
   const [values, changeHandler] = useForm()
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const signInUser = (e) => {
     e.preventDefault()
@@ -67,6 +69,7 @@ export default function SignIn() {
     .then( res => {
       window.localStorage.setItem('email', res.email)
       console.log(res)
+      history.push('/')
       dispatch(setUser(res))
     })
   }

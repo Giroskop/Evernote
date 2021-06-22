@@ -9,20 +9,6 @@ const UserSchema = new Schema({
 		type: String,
 		unique: true,
 	},
-	data: {
-		notepads: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: 'Notepad',
-			},
-		],
-		placemarks: [
-			{
-				type: Schema.Types.ObjectId,
-				ref: 'Placemark',
-			},
-		],
-	},
 	password: String,
 	created: Date,
 })

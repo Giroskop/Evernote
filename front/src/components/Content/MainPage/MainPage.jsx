@@ -2,7 +2,7 @@ import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import useForm from '../../../hooks/useForm'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {notepadCreate} from '../../../redux/actions/notepadAC'
 
 function rand() {
@@ -64,13 +64,14 @@ export default function MainPage() {
 	)
 	const [values, changeHandler] = useForm()
   const dispatch = useDispatch()
+  const user = useSelector(state => state.user)
 
 	async function makePlacemark(e) {
 		e.preventDefault()
 		const res = await fetch('http://localhost:3001/placemarks', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({placemarkTitle: values.placemarkTitle}),
+			body: JSON.stringify({placemarkTitle: values.placemarkTitle, email: user._id}),
 		})
 
 	}
@@ -79,7 +80,7 @@ export default function MainPage() {
 		const res = await fetch('http://localhost:3001/notepads', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({notepadTitle: values.notepadTitle}),
+			body: JSON.stringify({notepadTitle: values.notepadTitle, email: user._id}),
 		})
     const newNotepad = await res.json()
     console.log(newNotepad)

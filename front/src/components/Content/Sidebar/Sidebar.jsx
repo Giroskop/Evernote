@@ -44,7 +44,7 @@ export default function Sidebar() {
 	}, [])!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
  */
 	const path = useSelector(state => state.path)
-	const notepads = useSelector(state => state.user.notepads)
+	const notepads = useSelector(state => state.notepads)
 
 	return (
 		<div className='sidebar'>

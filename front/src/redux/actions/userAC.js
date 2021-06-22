@@ -12,6 +12,11 @@ const setUser = (obj) => {
     payload: obj
   }
 }
+const logoutUser = () => {
+  return {
+    type: USER_LOGOUT
+  }
+}
 
-export {setUser}
+export {setUser, logoutUser}
 
