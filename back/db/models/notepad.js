@@ -1,13 +1,14 @@
 const { Schema, model, pluralize } = require('mongoose')
 
 const NotepadSchema = new Schema({
-	title: String,
+	name: String,
 	markplaces: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: 'Placemark',
 		},
 	],
+  image: String,
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

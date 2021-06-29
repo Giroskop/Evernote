@@ -1,7 +1,5 @@
-const express = require('express')
-const router = express.Router()
-const Placemarks = require('../db/models/placemark')
-
+const router = require('express').Router()
+const placemarkController = require('../../controllers/placemarkController')
 /* GET home page. */
 router
 	.route('/')

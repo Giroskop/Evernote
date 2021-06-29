@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -7,15 +7,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
+import { Alert } from '@material-ui/lab'
 import useForm from '../../../hooks/useForm'
 import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import {setUser} from '../../../redux/actions/userAC'
+import { Link as Linkto } from 'react-router-dom'
+import { userRegisterSagaAC } from '../../../redux/saga/authSaga'
+import { REGISTER_FAIL } from '../../../redux/types/auth'
+import { clearErrorAC } from '../../../redux/actions/errorAC'
+
 function Copyright() {
 	return (
 		<Typography variant='body2' color='textSecondary' align='center'>
@@ -50,48 +54,28 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // Object.fromEntries(new Formdata(e.target))
-export default function SignUp() {
+export default function SignUp({toggleModal,setModalName}) {
 	const classes = useStyles()
 	const history = useHistory()
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 	const [values, changeHandler] = useForm()
-  const [error, setError] = useState({
-    status: false,
-    message: ''
-  })
 
-	const signUpUser = async (e) => {
+	const error = useSelector(state => state.error)
+	const [errorLocal, setErrorLocal] = useState({
+    status: false,
+		message: null,
+	})
+	// useEffect(() => {
+	// 	if (error.id === REGISTER_FAIL) {
+	// 		setErrorLocal({ status: true, message: error.message })
+	// 	} else {
+	// 		setErrorLocal({ status: false, message: null })
+	// 	}
+	// }, [error])
+	function signUp(e) {
 		e.preventDefault()
-		console.log('from signUp')
-		const res = await fetch('http://127.0.0.1:3001/auth/signUp', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(values),
-		})
-  
-    switch (res.status) {
-      case 200:
-        console.log('Успешно зарегестрирован')
-        console.log('you pushed to /')
-        const user = await res.json()
-        console.log(user)
-        window.localStorage.setItem('email', user.email)
-        dispatch(setUser(user))
-        history.push('/')
-        break
-      case 400:
-        console.log('не все поля заполнены')
-        setError(prev => ({...prev, message: 'Не все поля заполнены'}))
-        break
-      case 406:
-        console.log('юзер уже существует')
-        setError(prev => ({...prev, message: 'Юзер уже существует'}))
-        break
-      default:
-        console.log('error from auth', res)
-        history.push('/errorPage')
-        break
-    }
+		dispatch(clearErrorAC())
+		dispatch(userRegisterSagaAC(values))
 	}
 
 	return (
@@ -102,10 +86,12 @@ export default function SignUp() {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component='h1' variant='h5'>
-					Sign up
-          <p style={{color:"red"}}>{error.message}</p>
+					Регистрация
+					{error.id === REGISTER_FAIL ? (
+						<Alert severity='error'>{error.message}</Alert>
+					) : null}
 				</Typography>
-				<form className={classes.form} noValidate onSubmit={e => signUpUser(e)}>
+				<form className={classes.form} noValidate onSubmit={signUp}>
 					<Grid container spacing={2}>
 						<Grid item xs={12} sm={6}>
 							<TextField
@@ -114,7 +100,7 @@ export default function SignUp() {
 								variant='outlined'
 								fullWidth
 								id='firstName'
-								label='First Name'
+								label='Имя'
 								autoFocus
 								value={values.firstName || ''}
 								onChange={changeHandler}
@@ -125,7 +111,7 @@ export default function SignUp() {
 								variant='outlined'
 								fullWidth
 								id='lastName'
-								label='Last Name'
+								label='Фамилия'
 								name='lastName'
 								autoComplete='lname'
 								value={values.lastName || ''}
@@ -138,7 +124,7 @@ export default function SignUp() {
 								required
 								fullWidth
 								id='email'
-								label='Email Address'
+								label='Почта'
 								name='email'
 								autoComplete='email'
 								value={values.email || ''}
@@ -151,7 +137,7 @@ export default function SignUp() {
 								required
 								fullWidth
 								name='password'
-								label='Password'
+								label='Пароль'
 								type='password'
 								id='password'
 								autoComplete='current-password'
@@ -173,21 +159,21 @@ export default function SignUp() {
 						color='primary'
 						className={classes.submit}
 					>
-						Sign Up
+						Зарегистрироваться
 					</Button>
-					<Grid container justify='flex-end'>
+					<Grid container>
 						<Grid item>
-							<Link href='signIn' variant='body2'>
-								Already have an account? Sign in
-							</Link>
+              <button
+									type='button'
+									className='button toggleModalButton'
+									onClick={toggleModal}
+								>
+									Уже есть аккаунт? Войти
+								</button>
 						</Grid>
 					</Grid>
 				</form>
 			</div>
-			<Box mt={5}>
-				<Copyright />
-			</Box>
 		</Container>
-    
 	)
 }

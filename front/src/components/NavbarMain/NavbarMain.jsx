@@ -1,15 +1,10 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
-import { Link } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import {logoutUser} from '../../redux/actions/userAC'
-
+import { logoutUser } from '../../redux/actions/userAC'
+import { userLogoutAC } from '../../redux/actions/authAC'
+import AuthModal from '../Welcome/auth/AuthModal'
 const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
@@ -25,41 +20,42 @@ const useStyles = makeStyles(theme => ({
 export default function NavbarMain() {
 	const classes = useStyles()
 
-  const user = useSelector(state => state.user)
-  const dispatch = useDispatch()
-  const logout = () => {
-    dispatch(logoutUser())
-  }
+	const dispatch = useDispatch()
+
+	function logout() {
+		dispatch(userLogoutAC())
+	}
+	const isAuth = useSelector(state => state.auth.isAuth)
 
 	return (
-		<div className={classes.root}>
-			<AppBar position='static'>
-				<Toolbar>
-					<IconButton
-						edge='start'
-						className={classes.menuButton}
-						color='inherit'
-						aria-label='menu'
-					>
-						<MenuIcon />
-					</IconButton>
-					<Typography variant='h6' className={classes.title}>
-						News
-					</Typography>
-					{user.email ? (
-						<Button href='/signIn' variant='body2' color='inherit'>
-							Выйти
-						</Button>
+		<header className='header'>
+			<nav className='header__nav'>
+				<Link to='/' className='logo'>
+					LOGO
+				</Link>
+				<ul className='list'>
+					{isAuth ? (
+						<li className='list__item'>
+							<button className='button auth-link' onClick={logout}>
+								Выйти
+							</button>
+						</li>
 					) : (
-						<Link href='/signIn' variant='body2' color='inherit'>
-							Войти
-						</Link>
+						<>
+							<li className='list__item'>
+								<AuthModal
+									modalButtonName='Зарегистрироваться'
+								/>
+							</li>
+							<li className='list__item'>
+								<AuthModal
+									modalButtonName='Вход'
+								/>
+							</li>
+						</>
 					)}
-					<Link href='/signUp' variant='body2' color='inherit'>
-						Зарегистрироваться
-					</Link>
-				</Toolbar>
-			</AppBar>
-		</div>
+				</ul>
+			</nav>
+		</header>
 	)
 }

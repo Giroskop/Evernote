@@ -1,13 +1,9 @@
 const {Schema, model, pluralize} = require('mongoose')
 
 const PlacemarkSchema = new Schema({
-	title: String,
-	tags: [
-		{
-			type: Schema.Types.ObjectId,
-			ref: 'Tag',
-		},
-	],
+	name: String,
+  description: String,
+	tags: [String],
   author: {
     type: Schema.Types.ObjectId,
     ref: 'User',

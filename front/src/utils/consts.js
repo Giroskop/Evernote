@@ -1,0 +1,8 @@
+export const LOGIN_ROUTE = '/login'
+export const REGISTRATION_ROUTE = '/registration'
+export const MAIN_ROUTE = '/'
+export const WELCOME_ROUTE = '/'
+export const NOTEPADS_ROUTE = '/notepads'
+export const PLACEMARKS_ROUTE = '/placemarks'
+export const SETTINGS_ROUTE = '/settings'
+export const ERROR_ROUTE = '/error'

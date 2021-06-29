@@ -1,11 +1,7 @@
-import NotepadList from '../Notepad/NotepadList'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import { useLocation, Link, useHistory } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import { pathChange } from '../../../redux/actions/pathAC'
+import { useSelector } from 'react-redux'
 import MenuItem from './MenuItem'
-import { getUserInfoThunk } from '../../../redux/actions/userAC'
 const notepadArray = [
 	{
 		id: 1,
@@ -45,11 +41,11 @@ export default function Sidebar() {
  */
 	const path = useSelector(state => state.path)
 	const notepads = useSelector(state => state.notepads)
-
+  const isAuth = useSelector(state => state.isAuth)
 	return (
 		<div className='sidebar'>
-			<div className='sidebar-container'>
-				<div className='sidebar-items'>
+			<ul className='sidebar-list'>
+				<li className='sidebar-items'>
 					<div className='sidebar__subtitle'>
 						<Link
 							className={
@@ -62,15 +58,15 @@ export default function Sidebar() {
 							Главная
 						</Link>
 					</div>
-				</div>
-				<div className='sidebar-items'>
+				</li>
+				<li className='sidebar-items'>
 					<div className='sidebar__subtitle'>
 						<Link className='sidebar__subtitle-name' to='/placemarks'>
 							Все заметки
 						</Link>
 					</div>
-				</div>
-				<div className='sidebar-items'>
+				</li>
+				<li className='sidebar-items'>
 					<div className='sidebar__subtitle' onClick={collapse}>
 						<h3 className='sidebar__subtitle-name'>Блокноты</h3>
 						<ArrowDropDownIcon color='secondary' />
@@ -79,12 +75,12 @@ export default function Sidebar() {
 						{notepads.map(item => (
 							<MenuItem title={item.title} />
 						))}
-						<Link to='/notepads'>
-							<MenuItem title={'Все блокноты'} />
+						<Link to={isAuth ? '/notepads' : '/registration'}>
+							{<MenuItem title={'Все блокноты'} />}
 						</Link>
 					</ul>
-				</div>
-				<div className='sidebar-items'>
+				</li>
+				<li className='sidebar-items'>
 					<div className='sidebar__subtitle' onClick={collapse}>
 						<h3 className='sidebar__subtitle-name'>Настройки</h3>
 						<ArrowDropDownIcon color='secondary' />
@@ -101,8 +97,8 @@ export default function Sidebar() {
 							</Link>
 						</li>
 					</ul>
-				</div>
-			</div>
+				</li>
+			</ul>
 		</div>
 	)
 }

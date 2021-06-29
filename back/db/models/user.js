@@ -10,6 +10,10 @@ const UserSchema = new Schema({
 		unique: true,
 	},
 	password: String,
+  role: {
+    type: String,
+    default: "USER"
+  },
 	created: Date,
 })
 

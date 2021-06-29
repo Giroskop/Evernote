@@ -12,7 +12,7 @@ const {connect} = require('mongoose');
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(process.env.PORT || '3001');
+const port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
 /**
@@ -27,7 +27,7 @@ const server = http.createServer(app);
 
 server.listen(port, () => {
   console.log('server ok')
-  connect('mongodb://localhost:27017/p3w1d4t1', {useNewUrlParser: true, useUnifiedTopology: true}, () => {
+  connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}, () => {
     console.log('dataBase ok, port:', port)
   })
 });

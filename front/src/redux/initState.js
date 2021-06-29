@@ -1,22 +1,19 @@
 
 const initState = {
+  error: {
+    status: null,
+    message: null,
+    id: null
+  },
+  auth: {
+    token: localStorage.getItem('token'),
+    isAuth: false,
+    isLoading: false,
+    user: null
+  },
   user: {},
   notepads: [],
   placemarks: [],
-  tags: [],
   path: ''
 }
 export default initState
-// placemark = {
-//   title: String,
-//   description: String,
-//   notepadId: 4,
-//   tags: []
-// }
-// tag = {
-  
-// }
-// notepad = {
-//   id: 4,
-//   placemarks: [],
-// }

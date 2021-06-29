@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import { pathChange } from '../../../../redux/actions/pathAC'
 import NotepadItem from './NotepadItem'
 
