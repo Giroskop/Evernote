@@ -1,7 +1,9 @@
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import { useLocation, Link, useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import MenuItem from './MenuItem'
+import { useEffect } from 'react'
+import { userNotepadsLoadAC } from '../../../redux/saga/notepadSaga'
 const notepadArray = [
 	{
 		id: 1,
@@ -22,8 +24,15 @@ const notepadArray = [
 ]
 
 export default function Sidebar() {
-	const location = useLocation()
-
+  const location = useLocation()
+  const dispatch = useDispatch()
+  
+  
+    useEffect( () => {
+      console.log('должны загрузиться нотепады')
+      dispatch(userNotepadsLoadAC())
+    }, [])
+    
 	function collapse(e) {
 		const items = e.target.parentElement.parentElement
 		items.classList.toggle('sidebar__dropdown-collapse')

@@ -59,5 +59,3 @@ export const userLogoutFailAC = () => {
     type: LOGOUT_FAIL
   }
 }
-
-

@@ -36,7 +36,6 @@ export const userLoginSagaAC = values => {
 		payload: values,
 	}
 }
-
 export function* userWatcher() {
 	yield takeEvery(
 		[USER_LOAD_SAGA, USER_REGISTER_SAGA, USER_LOGIN_SAGA],

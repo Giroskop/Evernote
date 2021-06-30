@@ -21,10 +21,17 @@ class NotepadController {
     }
 	}
 	async getAll(req, res) {
-    const {authorId} = req.body
+    console.log('CHEEEEEEECK')
+    const {authorId} = req.query
 		const notepads = await Notepad.find({author: authorId})
+    console.log(notepads)
 		res.json(notepads)
 	}
+  async delete(req, res) {
+    const {notepadId} = req.body
+		const notepads = await Notepad.findOneAndDelete({notepadId: notepadId})
+		res.sendStatus(201)
+  }
 	async getOne(req, res) {
 		const { id } = req.params
 		const notepad = await Notepad.findOne({ _id: id })

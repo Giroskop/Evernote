@@ -59,8 +59,6 @@ class UserController {
       return next(ApiError.internal('Неверный пароль'))
 		}
     const token = generateJWT(user)
-    console.log('check')
-    console.log(token)
     return res.status(200).json({ token, user })
 	}
 	async auth(req, res, next) {
