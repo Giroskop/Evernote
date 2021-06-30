@@ -36,13 +36,13 @@ export default function AuthModal({ modalButtonName }) {
 		dispatch(clearErrorAC())
 	}
 	const toggleModal = () => {
-		handleClose()
-    if (modalName === 'Зарегистрироваться') {
-      setModalName('Войти')
-    } else {
-      setModalName('Зарегистрироваться')
-    }
-    handleOpen()
+    // setOpen(false)
+    // if (modalName === 'Зарегистрироваться') {
+    //   setModalName('Войти')
+    // } else {
+    //   setModalName('Зарегистрироваться')
+    // }
+    // setOpen(true)
 	}
 
 	return (
@@ -64,7 +64,7 @@ export default function AuthModal({ modalButtonName }) {
 			>
 				<Fade in={open}>
 					<div className={classes.paper}>
-						{modalName === 'Зарегистрироваться' ? (
+						{modalButtonName === 'Зарегистрироваться' ? (
 							<SignUp toggleModal={toggleModal} />
 						) : (
 							<SignIn toggleModal={toggleModal} />
