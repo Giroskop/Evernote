@@ -38,6 +38,7 @@ export const userRegisterFailAC = () => {
   }
 }
 export const userLoginSuccessAC = (payload) => {
+  console.log('in userLoadingSuccessAc', payload)
   return {
     type: LOGIN_SUCCESS,
     payload: payload

@@ -32,7 +32,6 @@ function* notepadWorker(action) {
 }
 function* loadNotepadsFromServer() {
   const user = select(userSelector)
-  console.log(user)
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',

@@ -29,7 +29,6 @@ export default function Sidebar() {
   
   
     useEffect( () => {
-      console.log('должны загрузиться нотепады')
       dispatch(userNotepadsLoadAC())
     }, [])
     

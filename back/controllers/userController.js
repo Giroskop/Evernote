@@ -8,7 +8,7 @@ function generateJWT(user) {
 	return jwt.sign(
 		{ id: user._id },
 		process.env.JWT_SECRET_KEY,
-		{ expiresIn: 3600 }
+		{ expiresIn: 360000 }
 	)
 }
 
@@ -37,7 +37,7 @@ class UserController {
 			password: passwordHash,
 			created: Date.now(),
 		})
-		const notepad = await Notepad.create({
+		await Notepad.create({
 			name: 'MyFirstNotepad',
 			author: user._id,
 			created: Date.now(),
@@ -46,6 +46,7 @@ class UserController {
     return res.status(201).json({ token, user })
 	}
 	async login(req, res, next) {
+    console.log('зашел в логин')
     const { email, password } = req.body
 		if (!email || !password) {
       return next(ApiError.badRequest('Некорректный email или password'))

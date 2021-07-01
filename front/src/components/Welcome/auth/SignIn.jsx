@@ -16,7 +16,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router'
 import { Link as Linkto } from 'react-router-dom'
 import { userLoginSagaAC } from '../../../redux/saga/authSaga'
-
+import { LOGIN_FAIL } from '../../../redux/types/auth'
+import { Alert } from '@material-ui/lab'
 
 function Copyright() {
 	return (
@@ -56,9 +57,10 @@ export default function SignIn({toggleModal}) {
 	const [values, changeHandler] = useForm()
 	const dispatch = useDispatch()
 	const history = useHistory()
-
+	const error = useSelector(state => state.error)
 	async function signIn(e) {
 		e.preventDefault()
+    console.log(values)
     dispatch(userLoginSagaAC(values))
 	}
 
@@ -71,7 +73,9 @@ export default function SignIn({toggleModal}) {
 				</Avatar>
 				<Typography component='h1' variant='h5'>
 					Вход в личный кабинет
-          {}
+          {error.id === LOGIN_FAIL ? (
+						<Alert severity='error'>{error.message}</Alert>
+					) : null}
 				</Typography>
 				<form className={classes.form} noValidate onSubmit={signIn}>
 					<TextField

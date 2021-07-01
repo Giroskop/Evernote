@@ -12,7 +12,6 @@ export const userNotepadsLoadingAC = () => {
   }
 }
 export const userNotepadsLoadedAC = (notepads) => {
-  console.log(notepads)
   return {
     type: USER_NOTEPADS_LOADED,
     action: notepads

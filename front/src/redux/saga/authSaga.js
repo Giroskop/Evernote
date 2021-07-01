@@ -10,6 +10,7 @@ import {
   userLoginFailAC,
 } from '../actions/authAC'
 import {
+  LOGIN_FAIL,
 	REGISTER_FAIL,
 	USER_LOAD_SAGA,
 	USER_LOGIN_SAGA,
@@ -25,6 +26,7 @@ export const userLoadSagaAC = () => {
 	}
 }
 export const userRegisterSagaAC = values => {
+  console.log('saga action', values)
 	return {
 		type: USER_REGISTER_SAGA,
 		payload: values,
@@ -56,6 +58,7 @@ function* userWorker(action) {
 			}
 			break
 		case USER_REGISTER_SAGA:
+      console.log('switch case ')
 			try {
 				const res = yield call(registerUser, action.payload)
 				yield put(userRegisterSuccessAC(res.data))
@@ -72,7 +75,7 @@ function* userWorker(action) {
 				yield put(userLoginSuccessAC(res.data))
 			} catch (error) {
 				yield put(
-					getErrorAC(error.response.status, error.response.data, REGISTER_FAIL)
+					getErrorAC(error.response.status, error.response.data, LOGIN_FAIL)
 				)
 				yield put(userLoginFailAC())
 			}

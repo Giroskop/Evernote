@@ -74,6 +74,7 @@ export default function SignUp({toggleModal,setModalName}) {
 	// }, [error])
 	function signUp(e) {
 		e.preventDefault()
+    console.log('reg button')
 		dispatch(clearErrorAC())
 		dispatch(userRegisterSagaAC(values))
 	}
