@@ -1,14 +1,14 @@
-import { NOTEPAD_CREATE, NOTEPAD_DELETE, USER_NOTEPADS_LOADED, USER_NOTEPADS_LOADING } from '../types/notepad'
+import { NOTEPAD_CREATE, NOTEPAD_DELETE, NOTEPADS_LOADED, NOTEPADS_LOADING } from '../types/notepad'
 
 export default function notepadsReducer(state = [], action) {
 
 	switch (action.type) {
-    case USER_NOTEPADS_LOADING:
+    case NOTEPADS_LOADING:
       return state
-    case USER_NOTEPADS_LOADED:
+    case NOTEPADS_LOADED:
       return action.payload
 		case NOTEPAD_CREATE:
-      return [...state,  action.payload]
+      return [action.payload, ...state]
 		case NOTEPAD_DELETE:
       return state.filter(item => item.id !== action.payload)
 		default:

@@ -49,7 +49,6 @@ function App() {
 										<AppRouter />
 									</div>
 								</div>
-
 						</>
 					)}
 				</div>

@@ -1,9 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
-import useForm from '../../../hooks/useForm'
-import { useDispatch, useSelector } from 'react-redux'
-import { notepadCreate } from '../../../redux/actions/notepadAC'
+import { useDispatch } from 'react-redux'
+import { notepadCreateSagaAC } from '../../../redux/saga/notepadSaga'
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10
@@ -62,34 +61,17 @@ export default function MainPage() {
 			</form>
 		</div>
 	)
-	const [values, changeHandler] = useForm()
+	const [notepadName, setNotepadName] = useState('')
+	const [placemarkName, setPlacemarkName] = useState('')
 	const dispatch = useDispatch()
-	const user = useSelector(state => state.user)
 
-	async function makePlacemark(e) {
+	async function placemarkCreate(e) {
 		e.preventDefault()
-		const res = await fetch('http://:3001/placemarks', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				placemarkTitle: values.placemarkTitle,
-				email: user._id,
-			}),
-		})
+    // dispatch(userPlacemarkCreateAC(placemarkName))
 	}
-	async function makeNotepad(e) {
+	async function notepadCreate(e) {
 		e.preventDefault()
-		const res = await fetch('http://localhost:3001/notepads', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				notepadTitle: values.notepadTitle,
-				email: user._id,
-			}),
-		})
-		const newNotepad = await res.json()
-
-		dispatch(notepadCreate(newNotepad))
+    dispatch(notepadCreateSagaAC(notepadName))
 	}
 
 	return (
@@ -131,11 +113,11 @@ export default function MainPage() {
 										type='text'
 										id='bloknot-name'
 										className='form__input'
-										name='notepadTitle'
-										value={values.notepadTitle || ''}
-										onChange={changeHandler}
+										name='name'
+										value={notepadName || ''}
+										onChange={(e) => setNotepadName(e.target.value)}
 									/>
-									<button className='button form__button' onClick={makeNotepad}>
+									<button className='button form__button' onClick={notepadCreate}>
 										Создать
 									</button>
 								</form>
@@ -174,12 +156,12 @@ export default function MainPage() {
 										id='bloknot-name'
 										className='form__input'
 										name='placemarkTitle'
-										value={values.placemarkTitle || ''}
-										onChange={changeHandler}
+										value={placemarkName || ''}
+										onChange={(e) => setPlacemarkName(e.target.value)}
 									/>
 									<button
 										className='button form__button'
-										onClick={makePlacemark}
+										onClick={placemarkCreate}
 									>
 										Создать
 									</button>

@@ -1,28 +1,28 @@
-import { NOTEPAD_CREATE, NOTEPAD_DELETE, USER_NOTEPADS_LOADING, USER_NOTEPADS_LOADED } from '../types/notepad'
+import { NOTEPAD_CREATE, NOTEPAD_DELETE, NOTEPADS_LOADING, NOTEPADS_LOADED } from '../types/notepad'
 
-const notepadCreate = (notepad) => {
+export const notepadCreateAC = (notepad) => {
   return {
     type: NOTEPAD_CREATE,
     payload: notepad,
   }
 }
-export const userNotepadsLoadingAC = () => {
+export const notepadsLoadingAC = () => {
   return {
-    type: USER_NOTEPADS_LOADING
+    type: NOTEPADS_LOADING
   }
 }
-export const userNotepadsLoadedAC = (notepads) => {
+export const notepadsLoadedAC = (notepads) => {
   return {
-    type: USER_NOTEPADS_LOADED,
-    action: notepads
+    type: NOTEPADS_LOADED,
+    payload: notepads
   }
 }
 
-const notepadDelete = (id) => {
+export const notepadDeleteAC = (id) => {
   return {
     type: NOTEPAD_DELETE,
     payload: id
   }
 }
 
-export {notepadCreate, notepadDelete}
+

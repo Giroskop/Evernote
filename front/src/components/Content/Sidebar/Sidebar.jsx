@@ -3,7 +3,7 @@ import { useLocation, Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import MenuItem from './MenuItem'
 import { useEffect } from 'react'
-import { userNotepadsLoadAC } from '../../../redux/saga/notepadSaga'
+import { notepadsLoadSagaAC } from '../../../redux/saga/notepadSaga'
 const notepadArray = [
 	{
 		id: 1,
@@ -29,7 +29,7 @@ export default function Sidebar() {
   
   
     useEffect( () => {
-      dispatch(userNotepadsLoadAC())
+      dispatch(notepadsLoadSagaAC())
     }, [])
     
 	function collapse(e) {
@@ -49,7 +49,6 @@ export default function Sidebar() {
  */
 	const path = useSelector(state => state.path)
 	const notepads = useSelector(state => state.notepads)
-  const isAuth = useSelector(state => state.isAuth)
 	return (
 		<div className='sidebar'>
 			<ul className='sidebar-list'>
@@ -80,12 +79,10 @@ export default function Sidebar() {
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>
-						{notepads.map(item => (
-							<MenuItem title={item.title} />
+						{notepads.reverse().map(item => (
+							<MenuItem name={item.name} />
 						))}
-						<Link to={isAuth ? '/notepads' : '/registration'}>
-							{<MenuItem title={'Все блокноты'} />}
-						</Link>
+							{<MenuItem name={'Все блокноты'} href={'/notepads'} />}
 					</ul>
 				</li>
 				<li className='sidebar-items'>

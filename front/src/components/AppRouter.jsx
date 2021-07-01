@@ -5,7 +5,7 @@ import { authRoutes, publicRoutes } from '../routes'
 import PageNotExist from './Errors/PageNotExist'
 export default function AppRouter() {
   // const isAuth = useSelector(state => state.isAuth)
-  const isAuth = useSelector(state => state.isAuth)
+  const isAuth = useSelector(state => state.auth.isAuth)
 	return (
 		<Switch>
       {isAuth && authRoutes.map(({path, Component}) => 
