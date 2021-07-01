@@ -10,9 +10,7 @@ async function auth(req, res, next) {
     return next(ApiError.unauthorized('Не авторизован'))
   }
   // try {
-    console.log('должен декодировать токен')
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-    console.log('декод токен-----', decoded)
     req.user = decoded
     next()
   // } catch (e) {

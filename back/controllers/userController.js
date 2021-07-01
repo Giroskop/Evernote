@@ -46,7 +46,6 @@ class UserController {
     return res.status(201).json({ token, user })
 	}
 	async login(req, res, next) {
-    console.log('зашел в логин')
     const { email, password } = req.body
 		if (!email || !password) {
       return next(ApiError.badRequest('Некорректный email или password'))
@@ -64,7 +63,8 @@ class UserController {
 	}
 	async auth(req, res, next) {
     const user = await User.findById(req.user.id).select('-password')
-		return res.status(200).json(user)
+
+		return res.json(user)
 	}
 }
 module.exports = new UserController()

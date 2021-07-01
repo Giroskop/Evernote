@@ -17,7 +17,7 @@ export default function authReducer(state = {}, action) {
 				isLoading: true,
 			}
 		case USER_LOADED:
-      console.log(action, 'ACTIONNNNNNNNNNNNNNNNNNN')
+
 			return {
 				...state,
 				isAuth: true,

@@ -12,9 +12,10 @@ import { userLoadSagaAC } from './redux/saga/authSaga'
 function App() {
 
 	const dispatch = useDispatch()
+  const token = useSelector(state => state.auth.token)
   
   useEffect(() => {
-    dispatch(userLoadSagaAC())
+    dispatch(userLoadSagaAC(token))
   }, [])
 
 	// useEffect(() => {

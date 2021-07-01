@@ -16,6 +16,7 @@ export const userLoadingAC = () => {
   }
 }
 export const userLoadedAC = (user) => {
+
   return {
     type: USER_LOADED,
     payload: user
@@ -27,6 +28,7 @@ export const authErrorAC = () => {
   }
 }
 export const userRegisterSuccessAC = (payload) => {
+
   return {
     type: REGISTER_SUCCESS,
     payload: payload
@@ -38,7 +40,6 @@ export const userRegisterFailAC = () => {
   }
 }
 export const userLoginSuccessAC = (payload) => {
-  console.log('in userLoadingSuccessAc', payload)
   return {
     type: LOGIN_SUCCESS,
     payload: payload

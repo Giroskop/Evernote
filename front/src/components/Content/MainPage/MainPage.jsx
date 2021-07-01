@@ -88,7 +88,7 @@ export default function MainPage() {
 			}),
 		})
 		const newNotepad = await res.json()
-		console.log(newNotepad)
+
 		dispatch(notepadCreate(newNotepad))
 	}
 

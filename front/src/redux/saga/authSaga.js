@@ -20,13 +20,14 @@ import { clearErrorAC, getErrorAC } from '../actions/errorAC'
 import { tokenSelector } from './selectors'
 import axios from 'axios'
 
-export const userLoadSagaAC = () => {
+export const userLoadSagaAC = (token) => {
 	return {
 		type: USER_LOAD_SAGA,
+    payload: token,
 	}
 }
 export const userRegisterSagaAC = values => {
-  console.log('saga action', values)
+
 	return {
 		type: USER_REGISTER_SAGA,
 		payload: values,
@@ -50,15 +51,15 @@ function* userWorker(action) {
 		case USER_LOAD_SAGA:
 			yield put(userLoadingAC())
 			try {
-				const user = yield call(loadUserFromServer)
-				yield put(userLoadedAC(user))
+				const res = yield call(loadUserFromServer, action.payload)
+
+				yield put(userLoadedAC(res.data))
 			} catch (error) {
 				yield put(getErrorAC(error.response.status, error.response.data))
 				yield put(authErrorAC())
 			}
 			break
 		case USER_REGISTER_SAGA:
-      console.log('switch case ')
 			try {
 				const res = yield call(registerUser, action.payload)
 				yield put(userRegisterSuccessAC(res.data))
@@ -84,17 +85,19 @@ function* userWorker(action) {
 			break
 	}
 }
-function* loadUserFromServer() {
+async function loadUserFromServer(token) {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	}
-	const token = yield select(tokenSelector)
+	// const token = yield select(tokenSelector)
 	if (token) {
 		config.headers['x-auth-token'] = token
 	}
-	yield axios.get('/api/user/auth', config)
+	const res = await axios.get('/api/user/auth', config)
+
+  return res
 }
 async function registerUser(values) {
 	const config = {

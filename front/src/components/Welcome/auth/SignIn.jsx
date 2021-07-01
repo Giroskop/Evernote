@@ -60,7 +60,7 @@ export default function SignIn({toggleModal}) {
 	const error = useSelector(state => state.error)
 	async function signIn(e) {
 		e.preventDefault()
-    console.log(values)
+
     dispatch(userLoginSagaAC(values))
 	}
 
