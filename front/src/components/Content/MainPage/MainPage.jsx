@@ -34,26 +34,11 @@ export default function MainPage() {
 	const classes = useStyles()
 	// getModalStyle is not a pure function, we roll the style only on the first render
 	const [modalStyle] = React.useState(getModalStyle)
-	const [open1, setOpen1] = React.useState(false)
-	const [open2, setOpen2] = React.useState(false)
-
-	const handleOpen1 = () => {
-		setOpen1(true)
-	}
-	const handleClose1 = () => {
-		setOpen1(false)
-	}
-	const handleOpen2 = () => {
-		setOpen2(true)
-	}
-	const handleClose2 = () => {
-		setOpen2(false)
-	}
 
 	const body = (
 		<div style={modalStyle} className={classes.paper}>
 			<form className='form card__form'>
-				<label className='form__label' htmlFor='bloknot-name' className='label'>
+				<label className='form__label' htmlFor='bloknot-name'>
 					Название блокнота
 				</label>
 				<input type='text' id='bloknot-name' className='form__input' />
@@ -61,18 +46,29 @@ export default function MainPage() {
 			</form>
 		</div>
 	)
-	const [notepadName, setNotepadName] = useState('')
+	const [notepadModalOpen, setNotepadModalOpen] = useState(false)
+	const [placemarkModalOpen, setPlacemarkModalOpen] = useState(false)
+	const [notepadName, setNotepadName] = useState({
+		name: '',
+		image: '',
+	})
 	const [placemarkName, setPlacemarkName] = useState('')
 	const dispatch = useDispatch()
 
-	async function placemarkCreate(e) {
-		e.preventDefault()
-    // dispatch(userPlacemarkCreateAC(placemarkName))
-	}
 	async function notepadCreate(e) {
 		e.preventDefault()
-    dispatch(notepadCreateSagaAC(notepadName))
+    console.log(notepadName)
+		dispatch(notepadCreateSagaAC(notepadName))
+		setNotepadName(prev => ({ ...prev, name: '' }))
+		setNotepadModalOpen(false)
 	}
+	async function placemarkCreate(e) {
+		e.preventDefault()
+		// dispatch(userPlacemarkCreateAC(placemarkName))
+		setPlacemarkName('')
+		setPlacemarkModalOpen(false)
+	}
+	console.log(notepadName)
 
 	return (
 		<div className='mainpage-wrapper'>
@@ -89,37 +85,60 @@ export default function MainPage() {
 						<button
 							className='button card__button'
 							type='button'
-							onClick={handleOpen1}
+							onClick={() => setNotepadModalOpen(true)}
 						>
 							Создать блокнот
 						</button>
 						<Modal
-							open={open1}
-							onClose={handleClose1}
+							open={notepadModalOpen}
+							onClose={() => setNotepadModalOpen(false)}
 							aria-labelledby='simple-modal-title'
 							aria-describedby='simple-modal-description'
 							closeAfterTransition={true}
 						>
 							<div style={modalStyle} className={classes.paper}>
-								<form className='form card__form'>
-									<label
-										className='form__label'
-										htmlFor='bloknot-name'
-										className='label'
-									>
+								<form
+									className='form card__form'
+									onSubmit={notepadCreate}
+									enctype='multipart/form-data'
+								>
+									<label className='form__label' htmlFor='notepad-name'>
 										Название блокнота
 									</label>
 									<input
+										autoFocus
 										type='text'
-										id='bloknot-name'
+										id='notepad-name'
 										className='form__input'
 										name='name'
-										value={notepadName || ''}
-										onChange={(e) => setNotepadName(e.target.value)}
+										value={notepadName.name || ''}
+										onChange={e =>
+											setNotepadName(prev => ({
+												...prev,
+												name: e.target.value,
+											}))
+										}
 									/>
-									<button className='button form__button' onClick={notepadCreate}>
-										Создать
-									</button>
+									<label
+										className='form__label-imageInput'
+										htmlFor='notepadImage'
+									>
+										Загрузить фото
+									</label>
+									<input
+										autoFocus
+										type='file'
+										id='notepadImage'
+										className='form__imageInput'
+										name='notepadImage'
+										onChange={e =>
+											setNotepadName(prev => ({
+												...prev,
+												image: e.target.files[0],
+											}))
+										}
+									/>
+									<button className='button form__button'>Создать</button>
 								</form>
 							</div>
 						</Modal>
@@ -132,32 +151,32 @@ export default function MainPage() {
 								className='card__image'
 							/>
 						</div>
-						<button className='button card__button' onClick={handleOpen2}>
+						<button
+							className='button card__button'
+							onClick={() => setPlacemarkModalOpen(true)}
+						>
 							Создать заметку
 						</button>
 						<Modal
-							open={open2}
-							onClose={handleClose2}
+							open={placemarkModalOpen}
+							onClose={() => setPlacemarkModalOpen(false)}
 							aria-labelledby='simple-modal-title'
 							aria-describedby='simple-modal-description'
 							closeAfterTransition={true}
 						>
 							<div style={modalStyle} className={classes.paper}>
 								<form className='form card__form'>
-									<label
-										className='form__label'
-										htmlFor='bloknot-name'
-										className='label'
-									>
+									<label className='form__label' htmlFor='placemark-name'>
 										Название заметки
 									</label>
 									<input
+										autoFocus
 										type='text'
-										id='bloknot-name'
+										id='placemark-name'
 										className='form__input'
 										name='placemarkTitle'
 										value={placemarkName || ''}
-										onChange={(e) => setPlacemarkName(e.target.value)}
+										onChange={e => setPlacemarkName(e.target.value)}
 									/>
 									<button
 										className='button form__button'

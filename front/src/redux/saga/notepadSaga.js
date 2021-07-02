@@ -4,9 +4,9 @@ import { NOTEPAD_CREATE_SAGA, NOTEPADS_LOAD_SAGA } from '../types/notepad'
 import { userIdSelector } from './selectors'
 import axios from 'axios'
 import {
-  notepadsLoadingAC,
+	notepadsLoadingAC,
 	notepadsLoadedAC,
-  notepadCreateAC,
+	notepadCreateAC,
 } from '../actions/notepadAC'
 
 export const notepadsLoadSagaAC = () => {
@@ -14,10 +14,10 @@ export const notepadsLoadSagaAC = () => {
 		type: NOTEPADS_LOAD_SAGA,
 	}
 }
-export const notepadCreateSagaAC = (value) => {
+export const notepadCreateSagaAC = value => {
 	return {
 		type: NOTEPAD_CREATE_SAGA,
-    payload: value
+		payload: value,
 	}
 }
 
@@ -32,7 +32,7 @@ function* notepadWorker(action) {
 			try {
 				const userId = yield select(userIdSelector)
 				const notepads = yield call(loadNotepadsFromServer, userId)
-				yield put(notepadsLoadedAC(notepads.data))
+				yield put(notepadsLoadedAC(notepads.data.reverse()))
 			} catch (error) {
 				yield put(
 					getErrorAC(
@@ -47,7 +47,7 @@ function* notepadWorker(action) {
 			yield put(notepadsLoadingAC())
 			try {
 				const userId = yield select(userIdSelector)
-        console.log(userId, '..............................')
+				console.log(userId, '..............................')
 				const notepad = yield call(notepadCreate, action.payload, userId)
 				yield put(notepadCreateAC(notepad.data))
 			} catch (error) {
@@ -76,10 +76,25 @@ function loadNotepadsFromServer(userId) {
 	}
 	return axios.get('/api/notepad', config)
 }
-function notepadCreate(name, userId) {
-  const body = {
-		name: name,
-    userId: userId
-	}
+function notepadCreate(form, userId) {
+	console.log(userId, 'userIddddddddddddd')
+	console.log(form, 'FOOOOOOOORM')
+  let fd = new FormData()
+  fd.append('name', form.name)
+  fd.append('image', form.image)
+	// const body = {
+	// 	body: {
+	// 		name: form.name,
+	// 		image: form.image,
+	// 		userId: userId,
+	// 	},
+	// }
+  const body = fd
+/* 	const config = {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'multipart/form-data',
+		},
+	} */
 	return axios.post('/api/notepad', body)
 }

@@ -4,9 +4,11 @@ const Notepad = require('../db/models/notepad')
 const ApiError = require('../error/ApiError')
 class NotepadController {
 	async create(req, res) {
-		const { name, userId } = req.body
-    console.log(name, userId, '<<<<<<<<<<<<<<')
+    console.log(req.body)
+		const { name, image, userId } = req.body.body
+    // console.log(name, image[0], userId, '<<<<<<<<<<<<<<')
 		if (!name) {
+      console.log('no name77777777')
 			return next(ApiError.badRequest('Недопустимое имя'))
 		}
 		const notepad = await Notepad.create({

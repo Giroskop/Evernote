@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { pathChange } from '../../../redux/actions/pathAC'
 import NotepadItem from './NotepadItem'
 
@@ -29,18 +29,14 @@ export default function NotepadList() {
 		dispatch(pathChange('/placemarks'))
 	}, [])
 
-  // {
-  //   type: PATH_CHANGE,
-  //   payload: '/'
-  // }
-  
-
+	const notepads = useSelector(state => state.notepads)
+  console.log(notepads)
 	return (
 		<div className='notepad-wrapper'>
-			<h3 className='notepad-title'>notepads</h3>
+			<h3 className='notepad-title'>Блокноты</h3>
 			<ul className='notepad-list'>
-				{notepadArray.map(item => (
-					<NotepadItem id={item.id} title={item.title} />
+				{notepads.map(item => (
+					<NotepadItem id={item.id} name={item.name} created={item.created} markplaces={item.markplaces}/>
 				))}
 			</ul>
 		</div>

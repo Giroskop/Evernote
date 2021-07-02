@@ -13,7 +13,6 @@
   flex-direction: column
   background: none
   border-radius: 5px
-  overflow: hidden
   font-family: 'Bebas Neue', cursive
   &__title
     background: #d8d8d8
@@ -32,27 +31,44 @@
     transition: 0.1s ease
     &:hover
       background-color: $orange
-div.makeStyles-paper-8
+div.makeStyles-paper-8, div.makeStyles-paper-6
   padding: 0
+  border-radius: 10px
+  : hidden
+    border: none
 .form
   display: flex
   flex-direction: column
   align-items: center
   justify-content: center
   background-color: $grey
-  padding: 10px 20px
+  padding: 20px 20px
   &__label
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
-    color: $orange
+    color: $black
+    font-weight: bold
+    font-size: 22px
+    &-imageInput
+      cursor: pointer
+      display: inline-block
+      padding: 5px 10px
+      background-color: $grey-dark
+      color: $orange
+      border: 1px solid $grey-dark
+      border-radius: 10px
+      transition: 0.1s ease
+      &:hover
+        color: $white
   &__input
     background-color: $light
     color: $black
     width: 100%
     padding: 2px 5px
     margin: 10px 5px 10px
+    border: none
   &__button
     margin-top: 10px
     margin-bottom: 10px
@@ -60,4 +76,10 @@ div.makeStyles-paper-8
     padding: 5px 10px
     background-color: $orange
     border-radius: 5px
-
+    font-weight: bold
+    transition: 0.2s ease
+    &:hover
+      // background-color: $grey-dark
+      color: $white
+  &__imageInput
+    display: none

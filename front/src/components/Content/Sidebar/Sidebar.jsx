@@ -49,6 +49,12 @@ export default function Sidebar() {
  */
 	const path = useSelector(state => state.path)
 	const notepads = useSelector(state => state.notepads)
+
+/*   console.log(notepads)
+  console.log(notepads.sort((a, b) => {
+    return new Date(a.created) - new Date(b.created) ? a: b
+  })) */
+  // console.log(notepads[0].created > notepads[1].created)
 	return (
 		<div className='sidebar'>
 			<ul className='sidebar-list'>
@@ -79,7 +85,7 @@ export default function Sidebar() {
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>
-						{notepads.reverse().map(item => (
+						{notepads.map(item => (
 							<MenuItem name={item.name} />
 						))}
 							{<MenuItem name={'Все блокноты'} href={'/notepads'} />}
