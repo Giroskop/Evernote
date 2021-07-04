@@ -6,6 +6,6 @@ export default function useForm(value) {
     setValues(prev => ({...prev, [e.target.name]: e.target.value}))
   }
   return (
-    [values, changeHandler, setValues]
+    [values, setValues, changeHandler]
   )
 }

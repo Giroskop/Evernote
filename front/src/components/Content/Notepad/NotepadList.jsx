@@ -4,24 +4,6 @@ import { pathChange } from '../../../redux/actions/pathAC'
 import NotepadItem from './NotepadItem'
 
 export default function NotepadList() {
-	const notepadArray = [
-		{
-			id: 1,
-			title: 'Что купить',
-			placemarks: [
-				{ id: 1, title: 'купить чай' },
-				{ id: 2, title: 'помыть пол' },
-			],
-		},
-		{
-			id: 2,
-			title: 'Что сделать',
-			placemarks: [
-				{ id: 1, title: 'выучить все хуки' },
-				{ id: 2, title: 'найти кайф-работу в 140к' },
-			],
-		},
-	]
 	const dispatch = useDispatch()
 
   
@@ -30,13 +12,13 @@ export default function NotepadList() {
 	}, [])
 
 	const notepads = useSelector(state => state.notepads)
-  console.log(notepads)
+
 	return (
-		<div className='notepad-wrapper'>
-			<h3 className='notepad-title'>Блокноты</h3>
-			<ul className='notepad-list'>
+		<div className='notepadList-wrapper'>
+			<h3 className='notepadList-title'>Блокноты</h3>
+			<ul className='notepadList-list'>
 				{notepads.map(item => (
-					<NotepadItem id={item.id} name={item.name} created={item.created} markplaces={item.markplaces}/>
+					<NotepadItem id={item._id} name={item.name} image={item.image} created={item.created} markplaces={item.markplaces}/>
 				))}
 			</ul>
 		</div>

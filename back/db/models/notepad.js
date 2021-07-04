@@ -2,7 +2,7 @@ const { Schema, model, pluralize } = require('mongoose')
 
 const NotepadSchema = new Schema({
 	name: String,
-	markplaces: [
+	placemarks: [
 		{
 			type: Schema.Types.ObjectId,
 			ref: 'Placemark',

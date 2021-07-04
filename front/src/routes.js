@@ -1,4 +1,5 @@
 import MainPage from './components/Content/MainPage/MainPage'
+import Notepad from './components/Content/Notepad/Notepad'
 import NotepadList from './components/Content/Notepad/NotepadList'
 import Error from './components/Errors/Error'
 import Settings from './components/Settings/Settings'
@@ -21,7 +22,7 @@ export const authRoutes = [
 	},
 	{
 		path: NOTEPADS_ROUTE + '/:id',
-		Component: NotepadList,
+		Component: Notepad,
 	},
 	{
 		path: SETTINGS_ROUTE,

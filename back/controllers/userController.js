@@ -39,6 +39,7 @@ class UserController {
 		})
 		await Notepad.create({
 			name: 'MyFirstNotepad',
+      image: 'public/default/notepadImage.webp',
 			author: user._id,
 			created: Date.now(),
 		})

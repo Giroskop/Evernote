@@ -15,6 +15,7 @@ function App() {
   const token = useSelector(state => state.auth.token)
   
   useEffect(() => {
+    console.log('app rendered')
     dispatch(userLoadSagaAC(token))
   }, [])
 

@@ -6,12 +6,13 @@ const session = require('express-session')
 const path = require('path');
 const logger = require('morgan');
 const cors = require('cors')
+const multer  = require('multer')
 
 function middleware(app) {
 
 	app.use(logger('dev'))
 	app.use(express.json())
-	app.use(express.static(path.join(__dirname,'..', 'public', 'img')))
+	app.use('/public', express.static(path.join('public')))
 	app.use(express.urlencoded({ extended: false }))
 	app.use(cookieParser())
 	app.use(cors())
@@ -37,5 +38,6 @@ function protect(req, res, next) {
   }
   next()
 }
+
 
 module.exports = {middleware, protect}

@@ -2,21 +2,20 @@ const uuid = require('uuid')
 const path = require('path')
 const Notepad = require('../db/models/notepad')
 const ApiError = require('../error/ApiError')
+
 class NotepadController {
-	async create(req, res) {
-    console.log(req.body)
-		const { name, image, userId } = req.body.body
-    // console.log(name, image[0], userId, '<<<<<<<<<<<<<<')
+	async create(req, res, next) {
+    const {name, userId} = req.body
+    const image = req.file?.path?.replace(/\\/g, '/') || 'public/default/notepadImage.webp'
 		if (!name) {
-      console.log('no name77777777')
 			return next(ApiError.badRequest('Недопустимое имя'))
 		}
 		const notepad = await Notepad.create({
 			name: name,
 			author: userId,
+      image: image,
 			created: Date.now(),
 		})
-    console.log('from back!')
 		return res.status(201).json(notepad)
 	}
 	async getAll(req, res) {

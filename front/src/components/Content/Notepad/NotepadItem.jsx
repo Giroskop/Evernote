@@ -1,10 +1,18 @@
-export default function NotepadItem({id, name, markplaces}) {
+import { Link } from 'react-router-dom'
 
-  return (
-    <li className="notepad-item notepad-list__item" id={id}>
-      <h4 className="notepad-item__title">
-        {name}
-      </h4>
-    </li>
-  )
+export default function NotepadItem({ id, name, image, markplaces }) {
+	console.log(image, 'adresss')
+	return (
+		<li
+			className='notepadList-item notepadList-list__item'
+			id={id}
+			style={{
+				backgroundImage: `url("${process.env.REACT_APP_BASE_URL}${image}")`,
+			}}
+		>
+			<Link to={`/notepads/${id}`}>
+				<h4 className='notepadList-item__title'>{name}</h4>
+			</Link>
+		</li>
+	)
 }

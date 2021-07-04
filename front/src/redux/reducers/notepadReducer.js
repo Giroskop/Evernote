@@ -1,4 +1,4 @@
-import { NOTEPAD_CREATE, NOTEPAD_DELETE, NOTEPADS_LOADED, NOTEPADS_LOADING } from '../types/notepad'
+import { NOTEPAD_CREATE, NOTEPAD_DELETE, NOTEPADS_LOADED, NOTEPADS_LOADING, NOTEPAD_LOADED } from '../types/notepad'
 
 export default function notepadsReducer(state = [], action) {
 

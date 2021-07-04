@@ -18,6 +18,8 @@ export const notepadsLoadedAC = (notepads) => {
   }
 }
 
+
+
 export const notepadDeleteAC = (id) => {
   return {
     type: NOTEPAD_DELETE,

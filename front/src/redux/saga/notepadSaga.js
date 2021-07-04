@@ -1,6 +1,9 @@
 import { put, call, takeEvery, select } from 'redux-saga/effects'
 import { clearErrorAC, getErrorAC } from '../actions/errorAC'
-import { NOTEPAD_CREATE_SAGA, NOTEPADS_LOAD_SAGA } from '../types/notepad'
+import {
+	NOTEPAD_CREATE_SAGA,
+	NOTEPADS_LOAD_SAGA,
+} from '../types/notepad'
 import { userIdSelector } from './selectors'
 import axios from 'axios'
 import {
@@ -14,15 +17,18 @@ export const notepadsLoadSagaAC = () => {
 		type: NOTEPADS_LOAD_SAGA,
 	}
 }
-export const notepadCreateSagaAC = value => {
+export const notepadCreateSagaAC = payload => {
 	return {
 		type: NOTEPAD_CREATE_SAGA,
-		payload: value,
+		payload: payload,
 	}
 }
 
 export function* notepadWatcher() {
-	yield takeEvery([NOTEPADS_LOAD_SAGA, NOTEPAD_CREATE_SAGA], notepadWorker)
+	yield takeEvery(
+		[NOTEPADS_LOAD_SAGA, NOTEPAD_CREATE_SAGA],
+		notepadWorker
+	)
 }
 
 function* notepadWorker(action) {
@@ -76,25 +82,8 @@ function loadNotepadsFromServer(userId) {
 	}
 	return axios.get('/api/notepad', config)
 }
-function notepadCreate(form, userId) {
-	console.log(userId, 'userIddddddddddddd')
-	console.log(form, 'FOOOOOOOORM')
-  let fd = new FormData()
-  fd.append('name', form.name)
-  fd.append('image', form.image)
-	// const body = {
-	// 	body: {
-	// 		name: form.name,
-	// 		image: form.image,
-	// 		userId: userId,
-	// 	},
-	// }
-  const body = fd
-/* 	const config = {
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'multipart/form-data',
-		},
-	} */
-	return axios.post('/api/notepad', body)
+
+function notepadCreate(fd, userId) {
+	fd.append('userId', userId)
+	return axios.post('/api/notepad', fd)
 }

@@ -6,6 +6,7 @@
   height: 100%
   background-color: $grey-dark
   box-shadow: 1px 0 0 #000
+  overflow: scroll
   color: $white
   &-list
     display: flex
@@ -14,7 +15,7 @@
     justify-content: center
     overflow: auto
     margin: 0
-    padding: 10px 0 0 10px
+    padding: 10px 0 100px 10px
   &-items
     width: 100%
     display: flex
@@ -37,7 +38,7 @@
       width: 100%
       text-align: start
       font-size: 24px
-      font-family: 'Bebas Neue', cursive;
+      font-family: 'Bebas Neue', cursive
       color: $white
       &--focus
         color: $orange
@@ -52,7 +53,6 @@
     text-align: start
     padding-left: 20px
     padding: 0
-    &:hover
     &-link
       display: inline-block
       width: 100%

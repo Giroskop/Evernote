@@ -24,37 +24,21 @@ const notepadArray = [
 ]
 
 export default function Sidebar() {
-  const location = useLocation()
-  const dispatch = useDispatch()
-  
-  
-    useEffect( () => {
-      dispatch(notepadsLoadSagaAC())
-    }, [])
-    
+	const location = useLocation()
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(notepadsLoadSagaAC())
+	}, [])
+
 	function collapse(e) {
 		const items = e.target.parentElement.parentElement
 		items.classList.toggle('sidebar__dropdown-collapse')
 		e.target.classList.toggle('sidebar__subtitle-name--focus')
 	}
-
-	function focus(e) {
-		e.target.classList.toggle('sidebar__subtitle-name--focus')
-	}
-
-/* 	const dispatch = useDispatch()
-	useEffect(async () => {
-		getUserInfoThunk()
-	}, [])!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
- */
 	const path = useSelector(state => state.path)
 	const notepads = useSelector(state => state.notepads)
 
-/*   console.log(notepads)
-  console.log(notepads.sort((a, b) => {
-    return new Date(a.created) - new Date(b.created) ? a: b
-  })) */
-  // console.log(notepads[0].created > notepads[1].created)
 	return (
 		<div className='sidebar'>
 			<ul className='sidebar-list'>
@@ -79,21 +63,29 @@ export default function Sidebar() {
 						</Link>
 					</div>
 				</li>
-				<li className='sidebar-items'>
+				<li className='sidebar-items sidebar__dropdown-collapse'>
 					<div className='sidebar__subtitle' onClick={collapse}>
-						<h3 className='sidebar__subtitle-name'>Блокноты</h3>
+						<h3 className='sidebar__subtitle-name sidebar__subtitle-name--focus'>
+							Блокноты
+						</h3>
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>
 						{notepads.map(item => (
-							<MenuItem name={item.name} />
+							<MenuItem name={item.name} id={item._id} />
 						))}
-							{<MenuItem name={'Все блокноты'} href={'/notepads'} />}
+						<li className='sidebar__item'>
+							<Link to='/notepads' className='sidebar__item-link'>
+								Все блокноты
+							</Link>
+						</li>
 					</ul>
 				</li>
-				<li className='sidebar-items'>
+				<li className='sidebar-items sidebar__dropdown-collapse'>
 					<div className='sidebar__subtitle' onClick={collapse}>
-						<h3 className='sidebar__subtitle-name'>Настройки</h3>
+						<h3 className='sidebar__subtitle-name sidebar__subtitle-name--focus'>
+							Настройки
+						</h3>
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>

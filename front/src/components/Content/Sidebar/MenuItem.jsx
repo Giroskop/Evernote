@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom"
 
-export default function MenuItem({name, href}) {
+export default function MenuItem({name, id}) {
 	return (
 		<>
 			<li className='sidebar__item'>
-        <Link to={href} className='sidebar__item-link'>{name}</Link>
+        <Link to={`notepads/${id}`} className='sidebar__item-link'>{name}</Link>
 			</li>
 		</>
 	)
