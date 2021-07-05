@@ -13,7 +13,7 @@ const NotepadSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User',
   },
-	created: Date,
+	created: String,
 })
 
 module.exports = model('Notepad', NotepadSchema)

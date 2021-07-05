@@ -14,6 +14,11 @@ const initState = {
   user: {},
   notepads: [],
   placemarks: [],
+  modals: {
+    backLayoutActive: false,
+    placemarkFormActive: false,
+    placemarkEditActive: false,
+  },
   path: ''
 }
 export default initState

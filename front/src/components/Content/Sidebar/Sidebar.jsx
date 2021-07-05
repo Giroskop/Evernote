@@ -1,5 +1,5 @@
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { useLocation, Link, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import MenuItem from './MenuItem'
 import { useEffect } from 'react'
@@ -24,9 +24,8 @@ const notepadArray = [
 ]
 
 export default function Sidebar() {
-	const location = useLocation()
 	const dispatch = useDispatch()
-
+  console.log('render sidbar')
 	useEffect(() => {
 		dispatch(notepadsLoadSagaAC())
 	}, [])
@@ -71,8 +70,8 @@ export default function Sidebar() {
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>
-						{notepads.map(item => (
-							<MenuItem name={item.name} id={item._id} />
+						{notepads.map((item,index) => (
+							<MenuItem name={item.name} id={item._id} key={() => Math.random()}/>
 						))}
 						<li className='sidebar__item'>
 							<Link to='/notepads' className='sidebar__item-link'>

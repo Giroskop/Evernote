@@ -1,9 +1,17 @@
 const multer = require('multer')
 const {nanoid} = require('nanoid')
+const ApiError = require('../error/ApiError')
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, 'public/images/notepads/')
+    if (file.fieldname === 'placemarkImage') {
+      cb(null, 'public/images/placemarks/')
+    } else if (file.fieldname === 'notepadImage') {
+      cb(null, 'public/images/notepads/')
+      console.log('in prop')
+    } else {
+      console.log('отсутствует путь в мультере')
+    }
 	},
 	filename: function (req, file, cb) {
     const format = `.${file.originalname.split(".")[1]}`
@@ -22,10 +30,9 @@ const fileFilter = (req, file, cb) => {
 		cb(null, false)
 	}
 }
-const upload = multer({ storage: storage, fileFilter: fileFilter })
+module.exports = multer({ storage: storage, fileFilter: fileFilter })
 
-const notepadImage = upload.single('notepadImage')
-module.exports = { notepadImage }
+
 
 
 

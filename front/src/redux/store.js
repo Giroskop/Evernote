@@ -6,12 +6,14 @@ import createSagaMiddleware from '@redux-saga/core'
 import { all } from '@redux-saga/core/effects'
 import { userWatcher } from './saga/authSaga'
 import { notepadWatcher } from './saga/notepadSaga'
+import { placemarkWatcher } from './saga/placemarkSaga'
 
 const sagaMiddleware = createSagaMiddleware()
 function* rootSaga() {
   yield all([
     userWatcher(),
-    notepadWatcher()
+    notepadWatcher(),
+    placemarkWatcher()
   ])
 }
 

@@ -1,0 +1,123 @@
+.placemarkForm
+  position: relative
+  width: 600px
+  overflow: hidden
+  margin: 30px auto
+  max-height: 50px
+  background: $grey-dark
+  border-radius: 10px
+  border: 2px solid black
+  &--collapse
+    min-height: 160px
+    max-height: 1000px
+    width: 600px
+    overflow: visible
+    z-index: 9990
+  &__input-wrapper
+    border-radius: 10px
+    max-height: 50px
+    // overflow: hidden
+    &--collapse
+      max-height: 1000px
+      display: flex
+      flex-direction: column-reverse
+      justify-content: flex-end
+  &__input
+    text-align: start
+    vertical-align: middle
+    color: $white
+    border: none
+    outline: none
+    background: none
+    width: 100%
+    min-height: 50px
+    padding: 10px 15px
+    resize: none
+    &::-webkit-input-placeholder
+      color: $grey
+    &::-moz-placeholder
+      color: $grey
+    &--title
+      font-size: 18px
+      line-height: 22px
+      rows: 80
+    &--text
+      font-size: 16px
+      line-height: 22px
+  &-options
+    position: relative
+    color: $white
+    height: 40px
+    width: 100%
+    display: flex
+    justify-content: start
+    align-items: center
+  &__iconInput
+    display: none
+    &-label
+      cursor: pointer
+      position: relative
+      height: 25px
+      width: 25px
+    &-icon
+      color: $white
+      &:hover
+        color: $orange
+  &-bottom
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0 15px
+  &__buttonClose
+    color: $white
+    padding: 2px 5px
+    border-radius: 2px
+    transition: .1s ease
+    &:hover
+      background: $grey
+    &:focus
+      background: $grey
+.pallete
+  position: absolute
+  bottom: 15px
+  left: 0
+  height: 150px
+  width: 150px
+  border: 1px solid red
+  z-index: 999
+  display: flex
+  justify-content: space-between
+  align-items: flex-start
+  flex-wrap: wrap
+  align-content: start
+  background: rgba(53, 53, 53, 0.847)
+  border-radius: 5px
+  padding: 10px
+  opacity: 0
+  transition: 1s ease
+  &--visible
+    opacity: 1
+  &__color
+    width: 22px
+    height: 22px
+    border-radius: 50%
+    margin: 2px
+    &--selected
+      border: 2px solid $white
+    &:hover
+      border: 2px solid $white
+.bc
+  &--greyDark
+    background: $grey-dark
+  &--grey
+    background: $grey
+  &--orange
+    background: $orange
+  &--red
+    background: red
+  &--green
+    background: green
+  &--blue
+    background: blue
+  &--yellow
+    background: yellow

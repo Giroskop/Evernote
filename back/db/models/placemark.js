@@ -1,14 +1,20 @@
-const {Schema, model, pluralize} = require('mongoose')
+const { Schema, model, pluralize } = require('mongoose')
 
 const PlacemarkSchema = new Schema({
 	name: String,
-  description: String,
+	text: String,
 	tags: [String],
-  author: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-	created: Date,
+	image: String,
+	notepad: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+	},
+	author: {
+		type: Schema.Types.ObjectId,
+		ref: 'User',
+	},
+	bcColor: String,
+	created: String,
 })
 
 module.exports = model('Placemark', PlacemarkSchema)

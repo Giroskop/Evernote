@@ -1,15 +1,14 @@
 const router = require('express').Router()
 const placemarkController = require('../../controllers/placemarkController')
+const imageMiddleware = require('../../middleware/multerMiddleware')
 /* GET home page. */
 router
 	.route('/')
-	.get(async (req, res) => {})
-	.post(async (req, res) => {
-		await Placemarks.create({
-			title: req.body.placemarkTitle,
-			created: Date.now(),
-		})
-		res.sendStatus(200)
-	})
+	.get(placemarkController.getAll)
+	.post(imageMiddleware.single('placemarkImage'), placemarkController.create)
+	.delete(placemarkController.delete)
 
+router
+	.route('/:id')
+	.get(placemarkController.getOne)
 module.exports = router

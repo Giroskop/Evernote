@@ -66,14 +66,14 @@ export default function MainPage() {
 		if (notepad.name.length > 20) {
 			setErrorLocal('Название блокнота слишком длинное')
 		}
-		if (notepad.name.length == 0) {
+		if (notepad.name.length === 0) {
 			setErrorLocal('Необходимо ввести название')
 		} else {
 			setErrorLocal('')
 		}
 	}
-	async function setNotepadName(e) {
-		await setNotepad(prev => ({
+  function setNotepadName(e) {
+		setNotepad(prev => ({
 			...prev,
 			name: e.target.value,
 		}))
@@ -139,7 +139,7 @@ export default function MainPage() {
 										/>
 										<label
 											className='form__label-imageInput'
-											htmlFor='notepadImage'
+											htmlFor='image'
 										>
 											<InsertPhotoIcon />
 										</label>
@@ -148,11 +148,11 @@ export default function MainPage() {
 											type='file'
 											id='notepadImage'
 											className='form__imageInput'
-											name='notepadImage'
+											name='image'
 											onChange={e =>
 												setNotepad(prev => ({
 													...prev,
-													image: e.target.files[0],
+													notepadImage: e.target.files[0],
 												}))
 											}
 										/>

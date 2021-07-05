@@ -5,6 +5,7 @@ import placemarkReducer from './placemarkReducer'
 import userReducer from "./userReducer";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
+import modalReducer from "./modalReducer";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   test: userReducer,
   notepads: notepadReducer,
   placemarks: placemarkReducer,
+  modals: modalReducer,
   path: pathReducer,
 })
 export default rootReducer

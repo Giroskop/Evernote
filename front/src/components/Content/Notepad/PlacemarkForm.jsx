@@ -1,34 +1,27 @@
 import { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import InsertPhotoIcon from '@material-ui/icons/InsertPhoto'
 import PaletteIcon from '@material-ui/icons/Palette'
-import { pathChange } from '../../../redux/actions/pathAC'
-import NotepadItem from './NotepadItem'
 import useForm from '../../../hooks/useForm'
 import TextareaAutosize from 'react-textarea-autosize'
 import Pallete from './Pallete'
-import { Portal } from 'react-portal'
-import useHover from '../../../hooks/useHover'
+import BackLayout from '../../BackLayout/BackLayout'
+import {
+  ALL_MODAL_CLOSE,
+	PLACEMARK_FORM_CLOSE,
+	PLACEMARK_FORM_OPEN,
+} from '../../../redux/types/modal'
+import axios from 'axios'
+import { placemarkCreateSagaAC } from '../../../redux/saga/placemarkSaga'
 export default function PlacemarkForm({ setEditable, isEditable }) {
 	const dispatch = useDispatch()
-
-	// useEffect(() => {
-	// 	dispatch(pathChange('/placemarks'))
-	// }, [])
-	// const notepads = useSelector(state => state.notepads)
-
-	const [isActive, setActive] = useState(false)
+	const notepadId = useParams().id
+	const [formActive, setFormActive] = useState(false)
 	const [values, setValues, changeHandler] = useForm()
+
 	const [palleteActive, setPalleteActive] = useState(false)
-
-	function isPalleteHandler() {
-		if (palleteActive) setPalleteActive(false)
-		else setPalleteActive(true)
-	}
-
-	function placemarkCreate(e) {
-		e.preventDefault()
-	}
+	const [palleteIconActive, setPalleteIconActive] = useState(false)
 
 	const [placemarkBackground, setPlacemarkBackground] = useState({
 		greyDark: true,
@@ -39,6 +32,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 		blue: false,
 		yellow: false,
 	})
+
 	function placemarkBackgroundSelect(e) {
 		if (e.target.classList.contains('pallete__color')) {
 			setPlacemarkBackground(prev => ({
@@ -58,88 +52,135 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 			if (placemarkBackground[color]) return color
 		}
 	}
-  const palleteRef = useRef()
-  console.log(palleteRef, 'yjjjjjjjjjjjjj')
-  const isHovering = useHover(palleteRef)
-  console.log(isHovering, 'CUSTOM HOVER')
+	const { placemarkFormActive, backLayoutActive } = useSelector(
+		state => state.modals
+	)
+	function placemarkFormOpenHandler(e) {
+		dispatch({
+			type: PLACEMARK_FORM_OPEN,
+		})
+	}
+	function placemarkFormCloseHandler(e) {
+    dispatch({
+      type: ALL_MODAL_CLOSE
+    })
+	}
 
-  const palleteIconRef = useRef()
-
+	function placemarkCreate(e) {
+		e.preventDefault()
+		if (setValues.text || setValues.name) {
+			let fd = new FormData()
+			for (let key in values) {
+				fd.append(key, values[key])
+			}
+			fd.append('notepadId', notepadId)
+			for (const color in placemarkBackground) {
+				if (placemarkBackground[color]) {
+					fd.append('bcColor', color)
+				}
+			}
+			dispatch(placemarkCreateSagaAC(fd))
+			// axios.post('api/placemark', fd)
+		}
+	}
 	return (
-		<form
-			className={`
+		<>
+			{backLayoutActive ? (
+				<BackLayout placemarkFormCloseHandler={placemarkFormCloseHandler} />
+			) : null}
+			<form
+				className={`
       placemarkForm ${
-				isActive ? 'placemarkForm placemarkForm--collapse' : ''
+				placemarkFormActive ? 'placemarkForm placemarkForm--collapse' : ''
 			} bc--${backgroundSelected()}
       `}
-			onSubmit={placemarkCreate}
-		>
-			<div
-				className={
-					isActive
-						? 'placemarkForm__input-wrapper placemarkForm__input-wrapper--collapse'
-						: 'placemarkForm__input-wrapper'
-				}
-				onClick={() => setActive(true)}
+				onSubmit={placemarkCreate}
 			>
-				<TextareaAutosize
-					type='text'
-					name='placemarkText'
-					placeholder='Заметка...'
-					className='placemarkForm__input placemarkForm__input--text'
-					onChange={changeHandler}
-				/>
-				<TextareaAutosize
-					type='text'
-					name='placemarkTitle'
-					placeholder='Введите заголовок...'
-					className='placemarkForm__input placemarkForm__input--title'
-					onChange={changeHandler}
-				/>
-			</div>
-			<div className='placemarkForm-bottom'>
-				<div className='placemarkForm-options'>
-					<label
-						className='placemarkForm__iconInput-label'
-						htmlFor='placemarkImage'
-						title='Добавить фото'
-					>
-						<InsertPhotoIcon
-							className='placemarkForm__iconInput-icon'
-							height={'50px'}
-						/>
-					</label>
-					<input
-						autoFocus
-						type='file'
-						id='placemarkImage'
-						className='placemarkForm__iconInput'
-						name='placemarkImage'
+				<div
+					className={
+						placemarkFormActive
+							? 'placemarkForm__input-wrapper placemarkForm__input-wrapper--collapse'
+							: 'placemarkForm__input-wrapper'
+					}
+					onClick={placemarkFormOpenHandler}
+				>
+					<TextareaAutosize
+						tabindex='2'
+						type='text'
+						name='text'
+						placeholder='Заметка...'
+						className='placemarkForm__input placemarkForm__input--text'
+						value={values.text || ''}
 						onChange={changeHandler}
 					/>
-					<div
-						className='placemarkForm__iconInput-label'
-						onMouseEnter={isPalleteHandler}
-					>
-						<PaletteIcon
-							className='placemarkForm__iconInput-icon'
-							height={'50px'}
-						/>
-						<Pallete
-							placemarkBackgroundSelect={placemarkBackgroundSelect}
-							placemarkBackground={placemarkBackground}
-							setPalleteActive={setPalleteActive}
-              palleteRef={palleteRef}
-						/>
-					</div>
+					<TextareaAutosize
+						tabindex='1'
+						type='text'
+						name='name'
+						placeholder='Введите заголовок...'
+						className='placemarkForm__input placemarkForm__input--title'
+						value={values.name || ''}
+						onChange={changeHandler}
+					/>
 				</div>
-				<button
-					className='button placemarkForm__buttonClose'
-					onClick={() => setActive(false)}
-				>
-					Закрыть
-				</button>
-			</div>
-		</form>
+				<div className='placemarkForm-bottom'>
+					<div className='placemarkForm-options'>
+						<label
+							className='placemarkForm__iconInput-label'
+							htmlFor='placemarkImage'
+							title='Добавить фото'
+						>
+							<InsertPhotoIcon
+								className='placemarkForm__iconInput-icon'
+								height={'50px'}
+								tabindex='3'
+							/>
+						</label>
+						<input
+							autoFocus
+							type='file'
+							id='placemarkImage'
+							className='placemarkForm__iconInput'
+							name='image'
+							onChange={e => {
+								setValues(prev => ({
+									...prev,
+									placemarkImage: e.target.files[0],
+								}))
+							}}
+						/>
+						<div
+							className='placemarkForm__iconInput-label'
+							onMouseEnter={() => {
+								setPalleteIconActive(true)
+								setPalleteActive(true)
+							}}
+							onMouseLeave={() => setPalleteActive(false)}
+						>
+							<PaletteIcon
+								className='placemarkForm__iconInput-icon'
+								height={'50px'}
+								tabindex='4'
+							/>
+							<Pallete
+								placemarkBackgroundSelect={placemarkBackgroundSelect}
+								placemarkBackground={placemarkBackground}
+								setPalleteActive={setPalleteActive}
+								palleteActive={palleteActive}
+								setPalleteIconActive={setPalleteIconActive}
+								palleteIconActive={palleteIconActive}
+							/>
+						</div>
+					</div>
+					<button
+						className='button placemarkForm__buttonClose'
+						onClick={placemarkFormCloseHandler}
+						tabindex='6'
+					>
+						Сохранить (закрыть)
+					</button>
+				</div>
+			</form>
+		</>
 	)
 }
