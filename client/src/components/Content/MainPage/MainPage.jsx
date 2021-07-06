@@ -97,6 +97,7 @@ export default function MainPage() {
 
 	return (
 		<div className='mainpage-wrapper'>
+      <h1 className="title">Ваши последние заметки</h1>
 			<div className='mainpage-menu'>
 				<ul className='mainpage-menu-list'>
 					<li className='card mainpage-menu-list__item'>

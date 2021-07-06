@@ -58,7 +58,7 @@ export default function SignUp({toggleModal,setModalName}) {
 	const classes = useStyles()
 	const history = useHistory()
 	const dispatch = useDispatch()
-	const [values, changeHandler] = useForm()
+	const [values, setValues, changeHandler] = useForm()
 
 	const error = useSelector(state => state.error)
 	const [errorLocal, setErrorLocal] = useState({

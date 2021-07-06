@@ -57,8 +57,8 @@ export default function Sidebar() {
 				</li>
 				<li className='sidebar-items'>
 					<div className='sidebar__subtitle'>
-						<Link className='sidebar__subtitle-name' to='/placemarks'>
-							Все заметки
+						<Link to='/notepads' className='sidebar__subtitle-name'>
+							Все блокноты
 						</Link>
 					</div>
 				</li>
@@ -73,11 +73,6 @@ export default function Sidebar() {
 						{notepads.map((item,index) => (
 							<MenuItem name={item.name} id={item._id} key={() => Math.random()}/>
 						))}
-						<li className='sidebar__item'>
-							<Link to='/notepads' className='sidebar__item-link'>
-								Все блокноты
-							</Link>
-						</li>
 					</ul>
 				</li>
 				<li className='sidebar-items sidebar__dropdown-collapse'>
