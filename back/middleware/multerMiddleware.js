@@ -8,9 +8,9 @@ const storage = multer.diskStorage({
       cb(null, 'public/images/placemarks/')
     } else if (file.fieldname === 'notepadImage') {
       cb(null, 'public/images/notepads/')
-      console.log('in prop')
+
     } else {
-      console.log('отсутствует путь в мультере')
+
     }
 	},
 	filename: function (req, file, cb) {

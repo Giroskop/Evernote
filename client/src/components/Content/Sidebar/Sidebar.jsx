@@ -1,27 +1,11 @@
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { nanoid } from 'nanoid'
 import MenuItem from './MenuItem'
 import { useEffect } from 'react'
 import { notepadsLoadSagaAC } from '../../../redux/saga/notepadSaga'
-const notepadArray = [
-	{
-		id: 1,
-		title: 'Что купить',
-		placemarks: [
-			{ id: 1, title: 'купить чай' },
-			{ id: 2, title: 'помыть пол' },
-		],
-	},
-	{
-		id: 2,
-		title: 'Что сделать',
-		placemarks: [
-			{ id: 1, title: 'выучить все хуки' },
-			{ id: 2, title: 'найти кайф-работу в 140к' },
-		],
-	},
-]
+
 
 export default function Sidebar() {
 	const dispatch = useDispatch()
@@ -44,11 +28,7 @@ export default function Sidebar() {
 				<li className='sidebar-items'>
 					<div className='sidebar__subtitle'>
 						<Link
-							className={
-								path === '/'
-									? 'sidebar__subtitle-name sidebar__subtitle-name--focus'
-									: 'sidebar__subtitle-name'
-							}
+							className='sidebar__subtitle-name'
 							to='/'
 						>
 							Главная
@@ -71,7 +51,7 @@ export default function Sidebar() {
 					</div>
 					<ul className='sidebar__list'>
 						{notepads.map((item,index) => (
-							<MenuItem name={item.name} id={item._id} key={() => Math.random()}/>
+							<MenuItem name={item.name} id={item._id} key={nanoid(10)}/>
 						))}
 					</ul>
 				</li>
@@ -84,13 +64,8 @@ export default function Sidebar() {
 					</div>
 					<ul className='sidebar__list'>
 						<li className='sidebar__item'>
-							<Link to='/settings' className='sidebar__item-link'>
+							<Link to='/profile' className='sidebar__item-link'>
 								Профиль
-							</Link>
-						</li>
-						<li className='sidebar__item'>
-							<Link to='/1123' className='sidebar__item-link'>
-								Выход
 							</Link>
 						</li>
 					</ul>

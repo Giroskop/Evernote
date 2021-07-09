@@ -5,8 +5,9 @@ import InsertPhotoIcon from '@material-ui/icons/InsertPhoto'
 import PaletteIcon from '@material-ui/icons/Palette'
 import useForm from '../../../hooks/useForm'
 import TextareaAutosize from 'react-textarea-autosize'
-import Pallete from './Pallete'
+import Pallete from '../Notepad/Pallete'
 import BackLayout from '../../BackLayout/BackLayout'
+
 import {
   ALL_MODAL_CLOSE,
 	PLACEMARK_FORM_CLOSE,
@@ -85,9 +86,6 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 	}
 	return (
 		<>
-			{backLayoutActive ? (
-				<BackLayout placemarkFormCloseHandler={placemarkFormCloseHandler} />
-			) : null}
 			<form
 				className={`
       placemarkForm ${
@@ -105,7 +103,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 					onClick={placemarkFormOpenHandler}
 				>
 					<TextareaAutosize
-						tabindex='2'
+						tabIndex='2'
 						type='text'
 						name='text'
 						placeholder='Заметка...'
@@ -114,7 +112,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 						onChange={changeHandler}
 					/>
 					<TextareaAutosize
-						tabindex='1'
+						tabIndex='1'
 						type='text'
 						name='name'
 						placeholder='Введите заголовок...'
@@ -133,7 +131,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 							<InsertPhotoIcon
 								className='placemarkForm__iconInput-icon'
 								height={'50px'}
-								tabindex='3'
+								tabIndex='3'
 							/>
 						</label>
 						<input
@@ -160,7 +158,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 							<PaletteIcon
 								className='placemarkForm__iconInput-icon'
 								height={'50px'}
-								tabindex='4'
+								tabIndex='4'
 							/>
 							<Pallete
 								placemarkBackgroundSelect={placemarkBackgroundSelect}
@@ -175,7 +173,7 @@ export default function PlacemarkForm({ setEditable, isEditable }) {
 					<button
 						className='button placemarkForm__buttonClose'
 						onClick={placemarkFormCloseHandler}
-						tabindex='6'
+						tabIndex='6'
 					>
 						Сохранить (закрыть)
 					</button>

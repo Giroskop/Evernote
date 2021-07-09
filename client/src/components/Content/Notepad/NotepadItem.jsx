@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
-export default function NotepadItem({ id, name, image, markplaces }) {
-	console.log(image, 'adresss')
+export default function NotepadItem({ id, name, image }) {
 	return (
 		<li
 			className='notepadList-item notepadList-list__item'

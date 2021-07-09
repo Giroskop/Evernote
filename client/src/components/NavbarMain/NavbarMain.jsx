@@ -1,24 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUser } from '../../redux/actions/userAC'
 import { userLogoutAC } from '../../redux/actions/authAC'
 import AuthModal from '../Welcome/auth/AuthModal'
-const useStyles = makeStyles(theme => ({
-	root: {
-		flexGrow: 1,
-	},
-	menuButton: {
-		marginRight: theme.spacing(2),
-	},
-	title: {
-		flexGrow: 1,
-	},
-}))
+import NotepadCreateModal from './NotepadCreateModal'
+
 
 export default function NavbarMain() {
-	const classes = useStyles()
 
 	const dispatch = useDispatch()
 
@@ -33,13 +21,18 @@ export default function NavbarMain() {
 				<Link to='/' className='logo'>
 					LOGO
 				</Link>
-				<ul className='list'>
+				<ul className='list list--login'>
 					{isAuth ? (
-						<li className='list__item'>
+						<>
+            <li className="list__item">
+              <NotepadCreateModal/>
+            </li>
+            <li className='list__item'>
 							<button className='button auth-link' onClick={logout}>
 								Выйти
 							</button>
 						</li>
+            </>
 					) : (
 						<>
 							<li className='list__item'>

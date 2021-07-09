@@ -5,11 +5,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
 function generateJWT(user) {
-	return jwt.sign(
-		{ id: user._id },
-		process.env.JWT_SECRET_KEY,
-		{ expiresIn: 360000 }
-	)
+	return jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+		expiresIn: 360000,
+	})
 }
 
 class UserController {
@@ -39,33 +37,37 @@ class UserController {
 		})
 		await Notepad.create({
 			name: 'MyFirstNotepad',
-      image: 'public/default/notepadImage.webp',
+			image: 'public/default/notepadImage.webp',
 			author: user._id,
 			created: Date.now(),
 		})
 		const token = generateJWT(user)
-    return res.status(201).json({ token, user })
+		return res.status(201).json({ token, user })
 	}
 	async login(req, res, next) {
-    const { email, password } = req.body
+		const { email, password } = req.body
 		if (!email || !password) {
-      return next(ApiError.badRequest('Некорректный email или password'))
+			return next(ApiError.badRequest('Некорректный email или password'))
 		}
 		const user = await User.findOne({ email: email })
 		if (!user) {
-      return next(ApiError.internal('Пользователь с такими данными не найден'))
+			return next(ApiError.internal('Пользователь с такими данными не найден'))
 		}
 		const comparePassword = await bcrypt.compare(password, user.password)
 		if (!comparePassword) {
-      return next(ApiError.internal('Неверный пароль'))
+			return next(ApiError.internal('Неверный пароль'))
 		}
-    const token = generateJWT(user)
-    return res.status(200).json({ token, user })
+		const token = generateJWT(user)
+		return res.status(200).json({ token, user })
 	}
 	async auth(req, res, next) {
-    const user = await User.findById(req.user.id).select('-password')
+		try {
+			const user = await User.findById(req.user.id).select('-password')
 
-		return res.json(user)
+			return res.json(user)
+		} catch (e) {
+			res.send(e)
+		}
 	}
 }
 module.exports = new UserController()

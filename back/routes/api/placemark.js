@@ -4,7 +4,7 @@ const imageMiddleware = require('../../middleware/multerMiddleware')
 /* GET home page. */
 router
 	.route('/')
-	.get(placemarkController.getAll)
+	.get(placemarkController.get)
 	.post(imageMiddleware.single('placemarkImage'), placemarkController.create)
 	.delete(placemarkController.delete)
 

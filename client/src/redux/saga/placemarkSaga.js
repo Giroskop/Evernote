@@ -10,11 +10,9 @@ import axios from 'axios'
 import { PLACEMARKS_LOAD_SAGA, PLACEMARK_CREATE_SAGA, PLACEMARK_DELETE_SAGA } from '../types/placemark'
 import { placemarkCreateAC, placemarksLoadAC } from '../actions/placemark.AC'
 
-export const placemarksLoadSagaAC = (payload) => {
-  console.log(payload, 'ID NOTEPAD')
+export const placemarksLoadSagaAC = () => {
 	return {
 		type: PLACEMARKS_LOAD_SAGA,
-    payload: payload,
 	}
 }
 export const placemarkCreateSagaAC = payload => {
@@ -41,8 +39,7 @@ function* placemarkWorker(action) {
 	switch (action.type) {
 		case PLACEMARKS_LOAD_SAGA:
 			try {
-				// const userId = yield select(userIdSelector)
-				const placemarks = yield call(loadPlacemarksFromServer, action.payload)
+				const placemarks = yield call(loadPlacemarksFromServer)
 				yield put(placemarksLoadAC(placemarks.data.reverse()))
 			} catch (error) {
 				yield put(
@@ -89,14 +86,8 @@ function* placemarkWorker(action) {
 	}
 }
 
-function loadPlacemarksFromServer(notepadId) {
-	// const userId = yield select(userIdSelector)
-	const config = {
-		headers: {
-			'Content-Type': 'application/json',
-		}
-	}
-	return axios.get(`/api/notepad/${notepadId}`)
+function loadPlacemarksFromServer() {
+	return axios.get(`/api/placemark`)
 }
 
 function placemarkCreate(fd, userId) {

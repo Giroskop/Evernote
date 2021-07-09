@@ -1,41 +1,48 @@
-import { Link, useParams } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import axios from 'axios'
-import Placemark from './Placemark'
-import PlacemarkForm from './PlacemarkForm'
-import { placemarksLoadSagaAC } from '../../../redux/saga/placemarkSaga'
+import PlacemarkForm from '../Placemarks/PlacemarkForm'
+import PlacemarkList from '../Placemarks/PlacemarkList'
+import PageNotExist from '../../Errors/Error'
+import BackLayout from '../../BackLayout/BackLayout'
+import { ALL_MODAL_CLOSE } from '../../../redux/types/modal'
+
 export default function Notepad() {
-  
   const dispatch = useDispatch()
 	const notepadId = useParams().id
 	const notepad = useSelector(state =>
 		state.notepads.find(item => item._id === notepadId)
 	)
-  useEffect( () => {
-    dispatch(placemarksLoadSagaAC(notepadId))
-  },[])
 
-	const [isEditable, setEditable] = useState(false)
-	const { innerWidth: width, innerHeight: height } = window
-  const {backLayoutActive} = useSelector(state => state.modals)
-  const placemarks = useSelector(state => state.placemarks)
+	const placemarks = useSelector(state => state.placemarks).filter(
+		item => item.notepad === notepadId
+	)
+  const { placemarkFormActive, backLayoutActive } = useSelector(
+		state => state.modals
+	)
+  function anyModalClose() {
+    dispatch({
+      type: ALL_MODAL_CLOSE
+    })
+  }
 
 	return (
 		<>
 			{notepad ? (
 				<>
 					<div className='notepad'>
+						{backLayoutActive ? (
+							<BackLayout
+              anyModalClose={anyModalClose}
+							/>
+						) : null}
 						<h1 className='notepad__title'>{notepad.name}</h1>
 						<PlacemarkForm />
-						<ul className='placemarks'>
-              {placemarks.map((item, index) => <Placemark isEditable={isEditable} setEditable={setEditable} name={item.name} text={item.text} id={item._id} tags={item.tags} bcColor={item.bcColor} created={item.created} index={index}/>)}
-							<Placemark />
-						</ul>
-						<div className={isEditable ? 'placemarkCloseArea' : ''}></div>
+						<PlacemarkList placemarks={placemarks} />
 					</div>
 				</>
-			) : null}
+			) : (
+				<PageNotExist />
+			)}
 		</>
 	)
 }

@@ -2,13 +2,12 @@ import { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { ALL_MODAL_CLOSE } from "../../redux/types/modal"
 
-export default function BackLayout({placemarkFormCloseHandler}) {
+export default function BackLayout({anyModalClose}) {
 
   
-  const dispatch = useDispatch()
   function handler(e) {
     if (e.key === "Escape") {
-      placemarkFormCloseHandler()
+      anyModalClose()
     }
   }
 
@@ -21,7 +20,7 @@ export default function BackLayout({placemarkFormCloseHandler}) {
 
   return (
     <>
-    <div className='backLayout' onClick={placemarkFormCloseHandler}></div> : ''
+    <div className='backLayout' onClick={anyModalClose}></div>
     </>
   )
 }

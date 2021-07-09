@@ -34,10 +34,5 @@ class NotepadController {
 		await Notepad.findOneAndUpdate({ _id: id }, {})
 		res.sendStatus(200)
 	}
-	async getOne(req, res) {
-    const {id} = req.params
-		const placemarks = await Placemark.find({notepad: id})
-		res.status(200).json(placemarks)
-	}
 }
 module.exports = new NotepadController()

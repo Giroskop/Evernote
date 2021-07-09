@@ -2,19 +2,18 @@ const Placemark = require('../db/models/placemark')
 const moment = require('moment')
 
 class PlacemarkController {
-	async getAll(req, res) {
-    const {notepadId} = req.body
-		const placemarks = await Placemark.find({notepad: notepadId})
+	async get(req, res) {
+		const placemarks = await Placemark.find()
 		res.status(200).json(placemarks)
 	}
 	async create(req, res) {
-
 		const { name, text, notepadId, userId, bcColor } = req.body
 		const image =
 			req.file?.path?.replace(/\\/g, '/') || null
 		if (!name) {
 			return next(ApiError.badRequest('Недопустимое имя placemark'))
 		}
+    console.log(image, '<<<<<<<<<<<<')
 		const placemark = await Placemark.create({
 			name: name,
       text: text,
@@ -22,7 +21,7 @@ class PlacemarkController {
       notepad: notepadId,
 			author: userId,
       bcColor: bcColor,
-			created: moment().format('DD-MM-YY'),
+			created: moment().format('DD-MM-YY hh:mm:ss'),
 		})
 		return res.status(201).json(placemark)
 	}

@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const ApiError = require('../error/ApiError')
+
 async function auth(req, res, next) {
   if (req.method === 'OPTIONS') {
     console.log('OPTIONS IN AUTH--------')

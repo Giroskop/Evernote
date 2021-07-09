@@ -8,6 +8,6 @@ router
 	.post(imageMiddleware.single('placemarkImage'), notepadController.create)
 	.delete(notepadController.delete)
 
-router.route('/:id').get(notepadController.getOne)
+// router.route('/:id').get(notepadController.getOne)
 
 module.exports = router

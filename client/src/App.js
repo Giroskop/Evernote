@@ -8,6 +8,7 @@ import Sidebar from './components/Content/Sidebar/Sidebar'
 import AppRouter from './components/AppRouter'
 import { useEffect, useState } from 'react'
 import { userLoadSagaAC } from './redux/saga/authSaga'
+import { placemarksLoadSagaAC } from './redux/saga/placemarkSaga'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
   useEffect(() => {
     console.log('app rendered')
     dispatch(userLoadSagaAC(token))
+    dispatch(placemarksLoadSagaAC())
   }, [])
 
 	// useEffect(() => {
@@ -41,7 +43,7 @@ function App() {
 										<AppRouter />
 									</div>
 								</div>
-							</div>{' '}
+							</div>
 						</>
 					) : (
 						<>
