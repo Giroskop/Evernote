@@ -21,40 +21,29 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-export default function AuthModal({ modalButtonName }) {
+export default function AuthModal({ modalButtonName, authModalOpen,setAuthModalOpen, authModalName, setAuthModalName }) {
 	const classes = useStyles()
-	const [open, setOpen] = React.useState(false)
-	const [modalName, setModalName] = useState('Зарегистрироваться')
 	const dispatch = useDispatch()
 
-	const handleOpen = () => {
-		setOpen(true)
-	}
-
 	const handleClose = () => {
-		setOpen(false)
+		setAuthModalOpen(false)
 		dispatch(clearErrorAC())
 	}
 	const toggleModal = () => {
-    // setOpen(false)
-    // if (modalName === 'Зарегистрироваться') {
-    //   setModalName('Войти')
-    // } else {
-    //   setModalName('Зарегистрироваться')
-    // }
-    // setOpen(true)
+    if (authModalName === 'Зарегистрироваться') {
+      setAuthModalName('Войти')
+    } else {
+      setAuthModalName('Зарегистрироваться')
+    }
 	}
 
 	return (
-		<div>
-			<button type='button' className='button auth-link' onClick={handleOpen}>
-				{modalButtonName}
-			</button>
+		<>
 			<Modal
 				aria-labelledby='transition-modal-title'
 				aria-describedby='transition-modal-description'
 				className={classes.modal}
-				open={open}
+				open={authModalOpen}
 				onClose={handleClose}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
@@ -62,9 +51,9 @@ export default function AuthModal({ modalButtonName }) {
 					timeout: 500,
 				}}
 			>
-				<Fade in={open}>
+				<Fade in={authModalOpen}>
 					<div className={classes.paper}>
-						{modalButtonName === 'Зарегистрироваться' ? (
+						{authModalName === 'Зарегистрироваться' ? (
 							<SignUp toggleModal={toggleModal} />
 						) : (
 							<SignIn toggleModal={toggleModal} />
@@ -72,6 +61,6 @@ export default function AuthModal({ modalButtonName }) {
 					</div>
 				</Fade>
 			</Modal>
-		</div>
+		</>
 	)
 }

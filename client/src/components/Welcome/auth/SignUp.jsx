@@ -54,7 +54,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // Object.fromEntries(new Formdata(e.target))
-export default function SignUp({toggleModal,setModalName}) {
+export default function SignUp({toggleModal}) {
 	const classes = useStyles()
 	const history = useHistory()
 	const dispatch = useDispatch()
@@ -74,7 +74,6 @@ export default function SignUp({toggleModal,setModalName}) {
 	// }, [error])
 	function signUp(e) {
 		e.preventDefault()
-
 		dispatch(clearErrorAC())
 		dispatch(userRegisterSagaAC(values))
 	}
@@ -146,12 +145,7 @@ export default function SignUp({toggleModal,setModalName}) {
 								onChange={changeHandler}
 							/>
 						</Grid>
-						<Grid item xs={12}>
-							<FormControlLabel
-								control={<Checkbox value='allowExtraEmails' color='primary' />}
-								label='I want to receive inspiration, marketing promotions and updates via email.'
-							/>
-						</Grid>
+
 					</Grid>
 					<Button
 						type='submit'
