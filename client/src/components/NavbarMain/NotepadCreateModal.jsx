@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import { useDispatch } from 'react-redux'
 import { notepadCreateSagaAC } from '../../redux/saga/notepadSaga'
-import InsertPhotoIcon from '@material-ui/icons/InsertPhoto'
+
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10
@@ -76,7 +76,7 @@ export default function NotepadCreateModal() {
 	return (
 		<>
 			<button
-				className='button card__button'
+				className='button card__button createNotepadButton'
 				type='button'
 				onClick={() => setIsNotepadModalOpen(true)}
 			>

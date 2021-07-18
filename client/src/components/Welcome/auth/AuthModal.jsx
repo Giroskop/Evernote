@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Modal from '@material-ui/core/Modal'
 import Backdrop from '@material-ui/core/Backdrop'
@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-export default function AuthModal({ modalButtonName, authModalOpen,setAuthModalOpen, authModalName, setAuthModalName }) {
+export default function AuthModal({ authModalOpen,setAuthModalOpen, authModalName, setAuthModalName }) {
 	const classes = useStyles()
 	const dispatch = useDispatch()
 
@@ -54,9 +54,9 @@ export default function AuthModal({ modalButtonName, authModalOpen,setAuthModalO
 				<Fade in={authModalOpen}>
 					<div className={classes.paper}>
 						{authModalName === 'Зарегистрироваться' ? (
-							<SignUp toggleModal={toggleModal} />
+							<SignUp toggleModal={toggleModal} setAuthModalOpen={setAuthModalOpen}/>
 						) : (
-							<SignIn toggleModal={toggleModal} />
+							<SignIn toggleModal={toggleModal} setAuthModalOpen={setAuthModalOpen}/>
 						)}
 					</div>
 				</Fade>

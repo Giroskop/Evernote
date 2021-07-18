@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -13,9 +11,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import { Alert } from '@material-ui/lab'
 import useForm from '../../../hooks/useForm'
-import { useHistory } from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link as Linkto } from 'react-router-dom'
 import { userRegisterSagaAC } from '../../../redux/saga/authSaga'
 import { REGISTER_FAIL } from '../../../redux/types/auth'
 import { clearErrorAC } from '../../../redux/actions/errorAC'
@@ -54,9 +50,8 @@ const useStyles = makeStyles(theme => ({
 }))
 
 // Object.fromEntries(new Formdata(e.target))
-export default function SignUp({toggleModal}) {
+export default function SignUp({toggleModal, setAuthModalOpen}) {
 	const classes = useStyles()
-	const history = useHistory()
 	const dispatch = useDispatch()
 	const [values, setValues, changeHandler] = useForm()
 
@@ -76,6 +71,9 @@ export default function SignUp({toggleModal}) {
 		e.preventDefault()
 		dispatch(clearErrorAC())
 		dispatch(userRegisterSagaAC(values))
+    if (!error.message) {
+      setAuthModalOpen(false)
+    }
 	}
 
 	return (

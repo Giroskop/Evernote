@@ -1,5 +1,3 @@
-import { useRef } from 'react'
-import useHover from '../../../hooks/useHover'
 
 export default function Pallete({
 	placemarkBackgroundSelect,
@@ -10,7 +8,6 @@ export default function Pallete({
 	palleteIconActive,
 }) {
 
-  
 	return (
 		<>
 			{palleteIconActive ? (

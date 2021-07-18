@@ -24,7 +24,7 @@ export default function Notepad() {
       type: ALL_MODAL_CLOSE
     })
   }
-
+  console.log('notepad render')
 	return (
 		<>
 			{notepad ? (

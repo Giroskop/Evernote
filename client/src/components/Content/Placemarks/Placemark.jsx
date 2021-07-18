@@ -1,16 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { pathChange } from '../../../redux/actions/pathAC'
 import {
 	ALL_MODAL_CLOSE,
 	PLACEMARK_EDIT_CLOSE,
 	PLACEMARK_EDIT_OPEN,
 } from '../../../redux/types/modal'
 // import NotepadItem from '../Notepad/NotepadItem'
-import TextareaAutosize from 'react-textarea-autosize'
 import useForm from '../../../hooks/useForm'
-import PlacemarkEditModal from './PlacemarkEditModal'
-import TestModal from './TestModal'
 // <TextareaAutosize
 // tabindex='1'
 // type='text'
@@ -29,11 +25,11 @@ export default function Placemark({
 	created,
 	index,
 	image,
+	setPlacemarkEditModalOpen,
+  setPlacemark
 }) {
 	const dispatch = useDispatch()
-	console.log(image)
 	function placeMarkOpenHandler(e) {
-		console.log(e.currentTarget.nextElementSibling)
 		e.currentTarget.nextElementSibling.classList.toggle(
 			'placemarkEditModal--visible'
 		)
@@ -74,7 +70,7 @@ export default function Placemark({
 	})
 
 	const handleClose = () => {
-		setOpen(false)
+		setPlacemarkEditModalOpen(false)
 		let fd = new FormData()
 		for (let key in values) {
 			fd.append(key, values[key])
@@ -89,18 +85,26 @@ export default function Placemark({
 	}
 	const [values, setValues, changeHandler] = useForm()
 
+  const placemarkList = useSelector(state => state.placemarks)
+
+	function modalOpen(e) {
+		const placemarkId = e.currentTarget.id
+    const placemark = placemarkList.find(item => item._id === placemarkId)
+    setPlacemark(placemark)
+		setPlacemarkEditModalOpen(true)
+	}
+  console.log(image)
 	return (
 		<>
-			<li id={id}>
+			<li id={id} onClick={modalOpen}>
 				<div
 					className={`placemark  bc--${bcColor}`}
 					id={id}
 					onClick={handleOpen}
 				>
-					<span className='placemark__index'>{index + 1}</span>
 					{image ? (
 						<img
-							src={process.env.REACT_APP_BASE_URL + image}
+							src={process.env.REACT_APP_BASE_URL + image + 'qqqqqqqq'}
 							alt=''
 							className='placemark__image'
 						/>
@@ -113,7 +117,7 @@ export default function Placemark({
 						<span className='placemark__created'>{created}</span>
 					</div>
 				</div>
-				<TestModal
+				{/* <PlacemarkEditModal
 					placeMarkCloseHandler={placeMarkCloseHandler}
 					name={name}
 					text={text}
@@ -131,7 +135,7 @@ export default function Placemark({
 					changeHandler={changeHandler}
 					placemarkBackground={placemarkBackground}
 					setPlacemarkBackground={setPlacemarkBackground}
-				/>
+				/> */}
 				{/* <PlacemarkEditModal
 					placeMarkCloseHandler={placeMarkCloseHandler}
 					name={name}

@@ -6,6 +6,7 @@ router
 	.route('/')
 	.get(placemarkController.get)
 	.post(imageMiddleware.single('placemarkImage'), placemarkController.create)
+  .patch(imageMiddleware.single('placemarkImage'), placemarkController.update)
 	.delete(placemarkController.delete)
 
 router

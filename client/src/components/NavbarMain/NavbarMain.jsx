@@ -23,50 +23,41 @@ export default function NavbarMain() {
 			setAuthModalName('Вход')
 		}
 	}
-  console.log(authModalName)
 	return (
 		<header className='header'>
 			<nav className='header__nav'>
 				<Link to='/' className='logo'>
 					LOGO
 				</Link>
-				<ul className='list list--login'>
-					{isAuth ? (
-						<>
-							<li className='list__item'>
-								<NotepadCreateModal />
-							</li>
-							<li className='list__item'>
-								<button className='button auth-link' onClick={logout}>
-									Выйти
-								</button>
-							</li>
-						</>
-					) : (
-						<>
-							<li
-								className='list__item auth-link'
-								onClick={handleOpen}
-							>
+				{isAuth ? (
+					<>
+          <ul className='list list--login'>
+						<NotepadCreateModal />
+
+						<button className='button auth-link' onClick={logout}>
+							Выйти
+						</button>
+            </ul>
+					</>
+				) : (
+					<>
+						<ul className='list'>
+							<li className='list__item auth-link' onClick={handleOpen}>
 								Зарегистрироваться
 							</li>
-							<li
-								className='list__item auth-link'
-								onClick={handleOpen}
-							>
+							<li className='list__item auth-link' onClick={handleOpen}>
 								Вход
 							</li>
-						</>
-					)}
-				</ul>
+						</ul>
+					</>
+				)}
+			</nav>
 				<AuthModal
-					modalButtonName='Вход'
 					authModalName={authModalName}
-          setAuthModalName={setAuthModalName}
+					setAuthModalName={setAuthModalName}
 					authModalOpen={authModalOpen}
 					setAuthModalOpen={setAuthModalOpen}
 				/>
-			</nav>
 		</header>
 	)
 }

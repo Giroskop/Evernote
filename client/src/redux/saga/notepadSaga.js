@@ -53,7 +53,6 @@ function* notepadWorker(action) {
 			yield put(notepadsLoadingAC())
 			try {
 				const userId = yield select(userIdSelector)
-				console.log(userId, '..............................')
 				const notepad = yield call(notepadCreate, action.payload, userId)
 				yield put(notepadCreateAC(notepad.data))
 			} catch (error) {

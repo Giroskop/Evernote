@@ -3,8 +3,6 @@ import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
@@ -13,11 +11,10 @@ import { makeStyles } from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import useForm from '../../../hooks/useForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
-import { Link as Linkto } from 'react-router-dom'
 import { userLoginSagaAC } from '../../../redux/saga/authSaga'
 import { LOGIN_FAIL } from '../../../redux/types/auth'
 import { Alert } from '@material-ui/lab'
+import { clearErrorAC } from '../../../redux/actions/errorAC'
 
 function Copyright() {
 	return (
@@ -52,16 +49,19 @@ const useStyles = makeStyles(theme => ({
 	},
 }))
 
-export default function SignIn({toggleModal}) {
+export default function SignIn({ toggleModal, setAuthModalOpen }) {
 	const classes = useStyles()
-	const [values, changeHandler] = useForm()
+	const [values, setValues, changeHandler] = useForm()
 	const dispatch = useDispatch()
-	const history = useHistory()
 	const error = useSelector(state => state.error)
-	async function signIn(e) {
-		e.preventDefault()
 
-    dispatch(userLoginSagaAC(values))
+	function signIn(e) {
+		e.preventDefault()
+		dispatch(clearErrorAC())
+		dispatch(userLoginSagaAC(values))
+		if (!error.message) {
+      setAuthModalOpen(false)
+    }
 	}
 
 	return (
@@ -73,7 +73,7 @@ export default function SignIn({toggleModal}) {
 				</Avatar>
 				<Typography component='h1' variant='h5'>
 					Вход в личный кабинет
-          {error.id === LOGIN_FAIL ? (
+					{error.id === LOGIN_FAIL ? (
 						<Alert severity='error'>{error.message}</Alert>
 					) : null}
 				</Typography>
@@ -86,8 +86,8 @@ export default function SignIn({toggleModal}) {
 						id='email'
 						label='Почта'
 						name='email'
-						autoComplete='email'
-						autoFocus
+						// autoComplete='email'
+						// autoFocus
 						value={values.email || ''}
 						onChange={changeHandler}
 					/>
@@ -115,13 +115,13 @@ export default function SignIn({toggleModal}) {
 					</Button>
 					<Grid container>
 						<Grid item>
-              <button
-									type='button'
-									className='button toggleModalButton'
-									onClick={toggleModal}
-								>
-									Еще не зарегистрированы? Зарегистрироваться
-								</button>
+							<button
+								type='button'
+								className='button toggleModalButton'
+								onClick={toggleModal}
+							>
+								Еще не зарегистрированы? Зарегистрироваться
+							</button>
 						</Grid>
 					</Grid>
 				</form>

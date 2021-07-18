@@ -1,12 +1,12 @@
 
 import './App.css'
-import style from './style/style.sass'
+import './style/style.sass'
 import { BrowserRouter } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import NavbarMain from './components/NavbarMain/NavbarMain'
 import Sidebar from './components/Content/Sidebar/Sidebar'
 import AppRouter from './components/AppRouter'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { userLoadSagaAC } from './redux/saga/authSaga'
 import { placemarksLoadSagaAC } from './redux/saga/placemarkSaga'
 
