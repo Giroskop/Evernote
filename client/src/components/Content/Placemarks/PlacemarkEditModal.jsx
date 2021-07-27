@@ -113,7 +113,6 @@ export default function PlacemarkEditModal({
 	}
 
 	const [text, setText] = useState('')
-	const contentEditableRef = useRef()
 
 	function testChange(e) {
 		setText(e.target.value)
@@ -200,7 +199,7 @@ export default function PlacemarkEditModal({
 										onChange={e => {
 											setValues(prev => ({
 												...prev,
-												image: e.target.files[0],
+												placemarkImage: e.target.files[0],
 												test: 'lalala',
 											}))
 											console.log('image loaded?')

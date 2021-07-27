@@ -1,9 +1,6 @@
 import { put, call, takeEvery, select } from 'redux-saga/effects'
 import { clearErrorAC, getErrorAC } from '../actions/errorAC'
-import {
-	NOTEPAD_CREATE_SAGA,
-	NOTEPADS_LOAD_SAGA,
-} from '../types/notepad'
+import { NOTEPAD_CREATE_SAGA, NOTEPADS_LOAD_SAGA } from '../types/notepad'
 import { userIdSelector } from './selectors'
 import axios from 'axios'
 import {
@@ -25,10 +22,7 @@ export const notepadCreateSagaAC = payload => {
 }
 
 export function* notepadWatcher() {
-	yield takeEvery(
-		[NOTEPADS_LOAD_SAGA, NOTEPAD_CREATE_SAGA],
-		notepadWorker
-	)
+	yield takeEvery([NOTEPADS_LOAD_SAGA, NOTEPAD_CREATE_SAGA], notepadWorker)
 }
 
 function* notepadWorker(action) {

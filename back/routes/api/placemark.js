@@ -11,5 +11,4 @@ router
 
 router
 	.route('/:id')
-	.get(placemarkController.getOne)
 module.exports = router

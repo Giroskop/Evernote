@@ -7,7 +7,7 @@ import Placemark from '../Placemarks/Placemark'
 import ModalTest from './ModalTest'
 import PlacemarkEditModal from './PlacemarkEditModal'
 
-export default function PlacemarkList() {
+export default function PlacemarkList({placemarks}) {
 	const [placemarkEditModalOpen, setPlacemarkEditModalOpen] = useState(false)
 	const [placemark, setPlacemark] = useState({})
 
@@ -16,10 +16,7 @@ export default function PlacemarkList() {
 		state.notepads.find(item => item._id === notepadId)
 	)
 
-	const placemarks = useSelector(state => state.placemarks).filter(
-		item => item.notepad === notepadId
-	)
-
+  
 	return (
 		<>
 			<ul className='placemarks'>
@@ -39,7 +36,7 @@ export default function PlacemarkList() {
 					/>
 				))}
 			</ul>
-			{placemarkEditModalOpen ? (
+			{/* {placemarkEditModalOpen ? (
 				<Portal>
 					<PlacemarkEditModal
 						placemark={placemark}
@@ -49,7 +46,7 @@ export default function PlacemarkList() {
 				</Portal>
 			) : (
 				''
-			)}
+			)} */}
 		</>
 	)
 }

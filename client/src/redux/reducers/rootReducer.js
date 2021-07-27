@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import pathReducer from "./pathReducer";
 import notepadReducer from './notepadReducer'
 import placemarkReducer from './placemarkReducer'
 import userReducer from "./userReducer";
@@ -16,6 +15,5 @@ const rootReducer = combineReducers({
   notepads: notepadReducer,
   placemarks: placemarkReducer,
   modals: modalReducer,
-  path: pathReducer,
 })
 export default rootReducer

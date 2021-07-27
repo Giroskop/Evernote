@@ -27,7 +27,6 @@ export const placemarkCreateSagaAC = payload => {
 	}
 }
 export const placemarkEditSagaAC = payload => {
-  console.log('payload')
 	return {
 		type: PLACEMARK_EDIT_SAGA,
 		payload: payload,
@@ -56,7 +55,8 @@ function* placemarkWorker(action) {
 	switch (action.type) {
 		case PLACEMARKS_LOAD_SAGA:
 			try {
-				const placemarks = yield call(loadPlacemarksFromServer)
+        const userId = yield select(userIdSelector)
+				const placemarks = yield call(loadPlacemarksFromServer, userId)
 				yield put(placemarksLoadAC(placemarks.data.reverse()))
 			} catch (error) {
 				yield put(
@@ -69,7 +69,6 @@ function* placemarkWorker(action) {
 			}
 			break
 		case PLACEMARK_EDIT_SAGA:
-			console.log('---')
 			try {
 				const placemark = yield call(placemarkEdit, action.payload)
 				yield put(placemarkEditAC(placemark.data))
@@ -84,7 +83,7 @@ function* placemarkWorker(action) {
 			}
 			break
 		case PLACEMARK_CREATE_SAGA:
-			console.log('test1')
+			console.log('check worker')
 			try {
 				const userId = yield select(userIdSelector)
 				const placemark = yield call(placemarkCreate, action.payload, userId)
@@ -119,8 +118,16 @@ function* placemarkWorker(action) {
 	}
 }
 
-function loadPlacemarksFromServer() {
-	return axios.get(`/api/placemark`)
+function loadPlacemarksFromServer(userId) {
+  const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		params: {
+			authorId: userId,
+		},
+	}
+	return axios.get(`/api/placemark`, config)
 }
 
 function placemarkCreate(fd, userId) {

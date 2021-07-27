@@ -102,9 +102,9 @@ export default function Placemark({
 					id={id}
 					onClick={handleOpen}
 				>
-					{image ? (
+					{image && image !== 'null' ? (
 						<img
-							src={process.env.REACT_APP_BASE_URL + image + 'qqqqqqqq'}
+							src={process.env.REACT_APP_BASE_URL + image}
 							alt=''
 							className='placemark__image'
 						/>

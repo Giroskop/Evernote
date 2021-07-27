@@ -55,7 +55,7 @@ export default function SignIn({ toggleModal, setAuthModalOpen }) {
 	const dispatch = useDispatch()
 	const error = useSelector(state => state.error)
 
-	function signIn(e) {
+  function signIn(e) {
 		e.preventDefault()
 		dispatch(clearErrorAC())
 		dispatch(userLoginSagaAC(values))

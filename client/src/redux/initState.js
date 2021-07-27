@@ -19,6 +19,5 @@ const initState = {
     placemarkFormActive: false,
     placemarkEditActive: false,
   },
-  path: ''
 }
 export default initState

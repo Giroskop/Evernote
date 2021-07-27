@@ -6,28 +6,28 @@ import {
 	authErrorAC,
 	userRegisterSuccessAC,
 	userRegisterFailAC,
-  userLoginSuccessAC,
-  userLoginFailAC,
+	userLoginSuccessAC,
+	userLoginFailAC,
 } from '../actions/authAC'
 import {
-  LOGIN_FAIL,
+	LOGIN_FAIL,
 	REGISTER_FAIL,
 	USER_LOAD_SAGA,
 	USER_LOGIN_SAGA,
 	USER_REGISTER_SAGA,
 } from '../types/auth'
 import { clearErrorAC, getErrorAC } from '../actions/errorAC'
-import { tokenSelector } from './selectors'
+import { tokenSelector, userIdSelector } from './selectors'
 import axios from 'axios'
+import { placemarksLoadAC } from '../actions/placemark.AC'
 
-export const userLoadSagaAC = (token) => {
+export const userLoadSagaAC = token => {
 	return {
 		type: USER_LOAD_SAGA,
-    payload: token,
+		payload: token,
 	}
 }
 export const userRegisterSagaAC = values => {
-
 	return {
 		type: USER_REGISTER_SAGA,
 		payload: values,
@@ -52,8 +52,11 @@ function* userWorker(action) {
 			yield put(userLoadingAC())
 			try {
 				const res = yield call(loadUserFromServer, action.payload)
-
 				yield put(userLoadedAC(res.data))
+				const userId = yield select(userIdSelector)
+				const placemarks = yield call(loadPlacemarksFromServer, userId)
+				console.log(placemarks, 'them<<<<<')
+				yield put(placemarksLoadAC(placemarks.data.reverse()))
 			} catch (error) {
 				yield put(getErrorAC(error.response.status, error.response.data))
 				yield put(authErrorAC())
@@ -74,6 +77,10 @@ function* userWorker(action) {
 			try {
 				const res = yield call(loginUser, action.payload)
 				yield put(userLoginSuccessAC(res.data))
+				const userId = yield select(userIdSelector)
+				const placemarks = yield call(loadPlacemarksFromServer, userId)
+				console.log(placemarks, 'them<<<<<')
+				yield put(placemarksLoadAC(placemarks.data.reverse()))
 			} catch (error) {
 				yield put(
 					getErrorAC(error.response.status, error.response.data, LOGIN_FAIL)
@@ -84,6 +91,18 @@ function* userWorker(action) {
 		default:
 			break
 	}
+}
+
+function loadPlacemarksFromServer(userId) {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		params: {
+			authorId: userId,
+		},
+	}
+	return axios.get(`/api/placemark`, config)
 }
 async function loadUserFromServer(token) {
 	const config = {
@@ -97,7 +116,7 @@ async function loadUserFromServer(token) {
 	}
 	const res = await axios.get('/api/user/auth', config)
 
-  return res
+	return res
 }
 async function registerUser(values) {
 	const config = {
@@ -117,4 +136,3 @@ async function loginUser(values) {
 	const body = JSON.stringify(values)
 	return await axios.post('/api/user/login', body, config)
 }
-

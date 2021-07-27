@@ -19,7 +19,6 @@ export default function Sidebar() {
 		items.classList.toggle('sidebar__dropdown-collapse')
 		e.target.classList.toggle('sidebar__subtitle-name--focus')
 	}
-	const path = useSelector(state => state.path)
 	const notepads = useSelector(state => state.notepads)
 
 	return (
@@ -50,8 +49,8 @@ export default function Sidebar() {
 						<ArrowDropDownIcon color='secondary' />
 					</div>
 					<ul className='sidebar__list'>
-						{notepads.map((item,index) => (
-							<MenuItem name={item.name} id={item._id} key={nanoid(10)}/>
+						{notepads.map((notepad,index) => (
+							<MenuItem notepad={notepad} key={nanoid(10)}/>
 						))}
 					</ul>
 				</li>

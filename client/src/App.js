@@ -13,22 +13,15 @@ import { placemarksLoadSagaAC } from './redux/saga/placemarkSaga'
 function App() {
 
 	const dispatch = useDispatch()
-  const token = useSelector(state => state.auth.token)
+  const {token, isAuth} = useSelector(state => state.auth)
   
   useEffect(() => {
     console.log('app rendered')
     dispatch(userLoadSagaAC(token))
-    dispatch(placemarksLoadSagaAC())
+    // dispatch(placemarksLoadSagaAC())
   }, [])
 
-	// useEffect(() => {
-	// 	if (localStorage.email) {
-	// 		dispatch(setUser(localStorage.email))
-	// 	} else {
-	// 		console.log(111)
-	// 	}
-	// }, [])
-	const isAuth = useSelector(state => state.auth.isAuth)
+
 	return (
 		<BrowserRouter>
 			<div className='App'>

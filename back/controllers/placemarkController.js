@@ -3,7 +3,9 @@ const moment = require('moment')
 
 class PlacemarkController {
 	async get(req, res) {
-		const placemarks = await Placemark.find()
+    const { authorId } = req.query
+		const placemarks = await Placemark.find({author: authorId})
+    console.log(placemarks, '<<<<')
 		res.status(200).json(placemarks)
 	}
 	async create(req, res) {
@@ -19,18 +21,17 @@ class PlacemarkController {
 			notepad: notepadId,
 			author: userId,
 			bcColor: bcColor,
-			created: moment().format('DD-MM-YY hh:mm:ss'),
+			created: moment().format('DD-MM-YY'),
 		})
 		return res.status(201).json(placemark)
 	}
 	async delete(req, res) {
-		const { id } = req.body
+		const { _id } = req.body
 		await Placemark.deleteOne({ _id: id })
 		res.sendStatus(200)
 	}
 	async update(req, res) {
 		const { _id, name, text, image, bcColor } = req.body
-		console.log(_id, name, text, image, bcColor)
 		const placemark = await Placemark.findByIdAndUpdate(_id, {
 				name: name,
 				text: text,
@@ -39,6 +40,5 @@ class PlacemarkController {
 		}, {new: true})
 		res.json(placemark)
 	}
-	async getOne(req, res) {}
 }
 module.exports = new PlacemarkController()
