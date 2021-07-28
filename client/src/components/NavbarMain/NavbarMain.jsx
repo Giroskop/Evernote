@@ -23,7 +23,6 @@ export default function NavbarMain() {
 			setAuthModalName('Вход')
 		}
 	}
-  console.log('должен закрыться---', authModalOpen)
 	return (
 		<header className='header'>
 			<nav className='header__nav'>

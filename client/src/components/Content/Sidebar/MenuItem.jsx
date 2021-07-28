@@ -1,41 +1,39 @@
 import { useState } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
+import { NOTEPAD_CHANGE_POSITION } from '../../../redux/types/notepad'
 export default function MenuItem({ notepad }) {
 
-  const [currentNotepad, setCurrentNotepad] = useState(null)
-
-  const notepads = []
-  function setNotepads() {}
+  const [selectedNotepad, setSelectedNotepad] = useState()
 
   function dragStartHandler(e, notepad) {
-    console.log(e.target.innerText, 'start--------')
-    e.target.style.color = 'black'
-    setCurrentNotepad(notepad)
+    // e.target.style.color = 'black'
+    setSelectedNotepad(notepad)
   }
   function dragLeaveHandler(e) {
-    console.log(e.target.innerText, 'leave--------')
-    e.target.parentElement.style.background = 'none'
-    e.target.style.color = 'white'
+    // e.target.parentElement.style.background = 'none'
+    // e.target.style.color = 'white'
   }
   function dragEndHandler(e) {
-    console.log(e.target.innerText, 'end--------')
-    e.target.style.color = 'white'
+    // e.target.style.color = 'white'
   }
   function dragOverHandler(e) {
     e.preventDefault()
-    e.target.parentElement.style.background = 'orange'
-    e.target.style.color = 'black'
+    // e.target.parentElement.style.background = 'orange'
+    // e.target.style.color = 'black'
   }
   function dragDropHandler(e, notepad) {
     e.preventDefault()
-    console.log(e.target.innerText, 'drop--------')
-    e.target.parentElement.style.background = 'none'
-    e.target.style.color = 'white'
-    setNotepads(notepads.map(item => {
-      if (item.id === notepad.id) {
-        return {...item}
-      }
-    }))
+    console.log(selectedNotepad, '<<<<<')
+    // e.target.parentElement.style.background = 'none'
+    // e.target.style.color = 'white'
+    // dispatch({
+    //   type: NOTEPAD_CHANGE_POSITION,
+    //   payload: {
+    //     // putItemId: get._id,
+    //     getItemId: notepad._id
+    //   }
+    // })
   }
   
 
@@ -48,6 +46,7 @@ export default function MenuItem({ notepad }) {
 				onDragEnd={dragEndHandler}
 				onDragOver={dragOverHandler}
         onDrop={(e) => dragDropHandler(e, notepad)}
+        draggable={true}
 			>
 				<Link to={`/notepads/${notepad._id}`} className='sidebar__item-link'>
 					{notepad.name}

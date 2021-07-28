@@ -55,7 +55,6 @@ function* userWorker(action) {
 				yield put(userLoadedAC(res.data))
 				const userId = yield select(userIdSelector)
 				const placemarks = yield call(loadPlacemarksFromServer, userId)
-				console.log(placemarks, 'them<<<<<')
 				yield put(placemarksLoadAC(placemarks.data.reverse()))
 			} catch (error) {
 				yield put(getErrorAC(error.response.status, error.response.data))

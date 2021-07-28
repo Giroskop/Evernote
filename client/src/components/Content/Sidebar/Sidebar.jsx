@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { nanoid } from 'nanoid'
 import MenuItem from './MenuItem'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { notepadsLoadSagaAC } from '../../../redux/saga/notepadSaga'
-
+import NotepadList from './NotepadList'
 
 export default function Sidebar() {
 	const dispatch = useDispatch()
-  console.log('render sidbar')
+	console.log('render sidebar')
 	useEffect(() => {
 		dispatch(notepadsLoadSagaAC())
 	}, [])
@@ -21,15 +21,35 @@ export default function Sidebar() {
 	}
 	const notepads = useSelector(state => state.notepads)
 
+	const [selectedNotepad, setSelectedNotepad] = useState()
+
+	function dragStartHandler(e) {
+    // console.log(notepad)
+		// setSelectedNotepad(e.target.innerText)
+    console.log(e.target, '--------')
+	}
+	function dragLeaveHandler(e) {
+		// e.target.style.background = 'none'
+	}
+	function dragEndHandler(e) {
+		// e.target.style.color = 'black'
+		// e.target.style.background = 'white'
+	}
+	function dragOverHandler(e) {
+		e.preventDefault()
+		// e.target.style.background = 'lightgray'
+	}
+	function dragDropHandler(e, notepad) {
+		e.preventDefault()
+		console.log(selectedNotepad, '<<<<<')
+	}
+
 	return (
 		<div className='sidebar'>
 			<ul className='sidebar-list'>
 				<li className='sidebar-items'>
 					<div className='sidebar__subtitle'>
-						<Link
-							className='sidebar__subtitle-name'
-							to='/'
-						>
+						<Link className='sidebar__subtitle-name' to='/'>
 							Главная
 						</Link>
 					</div>
@@ -48,11 +68,7 @@ export default function Sidebar() {
 						</h3>
 						<ArrowDropDownIcon color='secondary' />
 					</div>
-					<ul className='sidebar__list'>
-						{notepads.map((notepad,index) => (
-							<MenuItem notepad={notepad} key={nanoid(10)}/>
-						))}
-					</ul>
+					<NotepadList/>
 				</li>
 				<li className='sidebar-items sidebar__dropdown-collapse'>
 					<div className='sidebar__subtitle' onClick={collapse}>

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import NotepadItem from './NotepadItem'
-
+import { nanoid } from 'nanoid'
 export default function NotepadList() {
 	const dispatch = useDispatch()
 
@@ -16,6 +16,7 @@ export default function NotepadList() {
 						id={item._id}
 						name={item.name}
 						image={item.image}
+            key={nanoid(10)}
 					/>
 				))}
 			</ul>

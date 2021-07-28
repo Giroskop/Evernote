@@ -1,5 +1,4 @@
 const Notepad = require('../db/models/notepad')
-const Placemark = require('../db/models/placemark')
 const ApiError = require('../error/ApiError')
 const moment = require('moment')
 
@@ -16,11 +15,13 @@ class NotepadController {
 		if (!name) {
 			return next(ApiError.badRequest('Недопустимое имя'))
 		}
+    const count = await Notepad.count({author: userId})
 		const notepad = await Notepad.create({
 			name: name,
 			author: userId,
 			image: image,
 			created: moment().format('DD-MM-YY'),
+      position: count,
 		})
 		return res.status(201).json(notepad)
 	}

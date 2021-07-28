@@ -40,6 +40,7 @@ class UserController {
 			image: 'public/default/notepadImage.webp',
 			author: user._id,
 			created: Date.now(),
+      position: 0,
 		})
 		const token = generateJWT(user)
 		return res.status(201).json({ token, user })

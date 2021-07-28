@@ -14,6 +14,7 @@ const NotepadSchema = new Schema({
     ref: 'User',
   },
 	created: String,
+  position: Number,
 })
 
 module.exports = model('Notepad', NotepadSchema)
